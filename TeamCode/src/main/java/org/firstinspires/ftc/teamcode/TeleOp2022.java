@@ -21,9 +21,6 @@ public class TeleOp2022 extends LinearOpMode
             telemetry.addData("Init Error:", "Something failed to initialize");
             e.printStackTrace();
         }
-        boolean pressedLastIteration = false;
-        int launchValue = 0;
-
 
         telemetry.addData("Main Initialization ", "complete");
         telemetry.update();
@@ -48,15 +45,17 @@ public class TeleOp2022 extends LinearOpMode
             telemetry.addData("motorBackLeft: ", h.motorBackLeft.getPower());
             telemetry.addData("motorBackRight: ", h.motorBackRight.getPower());
             telemetry.addData("left trigger: ", gamepad1.left_trigger);
-            telemetry.addData("motorLaunch: ", h.motorLaunch.getPower());
-            telemetry.addData("servoIntake: ",  h.servoIntake.getPosition());
+
+            //telemetry.addData("motorLaunch: ", h.motorLaunch.getPower());
+            //telemetry.addData("servoIntake: ",  h.servoIntake.getPosition());
             //telemetry.addData("launchValue: ",launchValue);
             //telemetry.addData("intakeValue", intakeValue);
             //telemetry.addData("range", String.format("%.01f in", h.distanceSensor.getDistance(DistanceUnit.INCH)));
             //telemetry.addData("Distance: ",h.distanceSensor.getDistance(DistanceUnit.INCH));
             telemetry.update();
             h.driveOmniDir(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
-            boolean pressed = gamepad1.y;
+
+            /*boolean pressed = gamepad1.y;
             if(gamepad1.dpad_up)
             {
                 h.motorLaunch.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -64,7 +63,7 @@ public class TeleOp2022 extends LinearOpMode
             if(gamepad1.dpad_down)
             {
                 h.motorLaunch.setDirection(DcMotorSimple.Direction.FORWARD);
-            }
+            }*/
 
 
 
@@ -85,7 +84,7 @@ public class TeleOp2022 extends LinearOpMode
             {
                 h.motorLaunch.setPower(0);
             }*/
-            if (gamepad1.y)
+            /*if (gamepad1.y)
             {
                 h.motorLaunch.setPower(1);
             }
@@ -105,7 +104,7 @@ public class TeleOp2022 extends LinearOpMode
                 }
 
             }
-            pressedLastIteration = pressed;
+            pressedLastIteration = pressed;*/
 
 
             /*if (gamepad1.y) //y button toggle Launcher Control
@@ -122,14 +121,14 @@ public class TeleOp2022 extends LinearOpMode
                     launchValue = 0;
                     break;
             }*/
-            if(gamepad1.a)
+            /*if(gamepad1.a)
             {
                 h.servoIntake.setPosition(.7);
             }
             if(gamepad1.b)
             {
                 h.servoIntake.setPosition(1);
-            }
+            }*/
             /*if (gamepad1.a) //Intake Control
             {
                 ++intakeValue;

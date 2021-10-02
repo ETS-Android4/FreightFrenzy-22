@@ -54,9 +54,7 @@ public class Hardware extends LinearOpMode
     DcMotor.RunMode initialMode = null;
 
     int driveTime;
-    boolean stopper;
-    public int currentDegrees;
-    public int launchValue = 0;
+
 
     private Telemetry telemetry;
 
@@ -81,7 +79,7 @@ public class Hardware extends LinearOpMode
         motorSwivel =aMap.dcMotor.get("motorSwivel");*/
 
         //motorLeftLaunch = aMap.dcMotor.get("motorLeftLaunch");
-        motorLaunch = aMap.dcMotor.get("motorLaunch");
+       // motorLaunch = aMap.dcMotor.get("motorLaunch");
             //motorIntake = aMap.dcMotor.get("motorIntake");
         //motorWorm = aMap.dcMotor.get("motorWorm");
         /*//motorLift = aMap.dcMotor.get("motorLift");
@@ -95,7 +93,7 @@ public class Hardware extends LinearOpMode
         servoFoundation2 = aMap.servo.get("servoFoundation2");
         servoSuction = aMap.servo.get("servoSuction");
         */
-        servoIntake = aMap.servo.get("servoIntake");
+        //servoIntake = aMap.servo.get("servoIntake");
         /*
         servoSpin = aMap.crservo.get("servoSpin");
         servoSpin2 = aMap.crservo.get("servoSpin2");
@@ -108,7 +106,7 @@ public class Hardware extends LinearOpMode
         //distanceSensor = hardwareMap.get(DistanceSensor.class, "Distance");
 
 
-        motorLaunch.setDirection(DcMotorSimple.Direction.FORWARD);
+        //motorLaunch.setDirection(DcMotorSimple.Direction.FORWARD);
             //motorIntake.setDirection(DcMotorSimple.Direction.FORWARD);
         //motorWorm.setDirection(DcMotorSimple.Direction.FORWARD);
         //motorLeftLaunch.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -145,8 +143,8 @@ public class Hardware extends LinearOpMode
         //motorWinch.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
 
-        motorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        motorBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        motorFrontRight.setDirection(DcMotorSimple.Direction.FORWARD);
+        motorBackRight.setDirection(DcMotorSimple.Direction.FORWARD);
         motorFrontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
         motorBackLeft.setDirection(DcMotorSimple.Direction.FORWARD);
 
@@ -422,10 +420,15 @@ public class Hardware extends LinearOpMode
     public void driveOmniDir(double joystickX, double joystickY, double rotation)
      {
         
-        motorFrontRight.setPower(-joystickY - joystickX - rotation);
+        motorFrontRight.setPower(joystickY - joystickX - rotation);
         motorBackRight.setPower(-joystickY + joystickX - rotation);
-        motorFrontLeft.setPower(-joystickY + joystickX + rotation);
-        motorBackLeft.setPower(-joystickY - joystickX + rotation);
+        motorFrontLeft.setPower(-joystickY - joystickX - rotation);
+        motorBackLeft.setPower(joystickY + joystickX - rotation);
+
+         //motorFrontRight.setPower(joystickY - joystickX + rotation);
+         //motorBackRight.setPower(-joystickY - joystickX + rotation);
+         //motorFrontLeft.setPower(-joystickY + joystickX + rotation);
+         //motorBackLeft.setPower(joystickY + joystickX - rotation);
     }
 
     public void turn(int targetDegrees, double power, double correctionPower)
