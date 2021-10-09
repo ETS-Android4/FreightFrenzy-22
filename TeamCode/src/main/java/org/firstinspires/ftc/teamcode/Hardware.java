@@ -148,6 +148,9 @@ public class Hardware extends LinearOpMode
         motorFrontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
         motorBackLeft.setDirection(DcMotorSimple.Direction.FORWARD);
 
+        telemetry.addData("past set direction","");
+        telemetry.update();
+
         motorFrontRight.setPower(0);
         motorBackRight.setPower(0);
         motorFrontLeft.setPower(0);

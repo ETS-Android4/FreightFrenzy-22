@@ -55,15 +55,9 @@ public class TeleOp2022 extends LinearOpMode
             telemetry.update();
             h.driveOmniDir(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
 
+
+
             /*boolean pressed = gamepad1.y;
-            if(gamepad1.dpad_up)
-            {
-                h.motorLaunch.setDirection(DcMotorSimple.Direction.REVERSE);
-            }
-            if(gamepad1.dpad_down)
-            {
-                h.motorLaunch.setDirection(DcMotorSimple.Direction.FORWARD);
-            }*/
 
 
 
