@@ -29,35 +29,12 @@ public class TeleOp2022 extends LinearOpMode
         while (opModeIsActive())
         {
 
-            /*telemetry.addData("motorWinch Position: ", h.motorWinch.getCurrentPosition());
-            telemetry.addData("motorSwivel Position: ", h.motorSwivel.getCurrentPosition());
-            telemetry.addData("motorArm Position: ", h.motorArm.getCurrentPosition());*/
-
-            //telemetry.addData("targetSwivel Value:", swivelTarget);
-            //telemetry.addData("Distance: ",h.distanceSensor.getDistance(DistanceUnit.INCH));
-            /*telemetry.addData("Alpha", h.colorSensor.alpha());
-            telemetry.addData("Red  ", h.colorSensor.red());
-            telemetry.addData("Green", h.colorSensor.green());
-            telemetry.addData("Blue ", h.colorSensor.blue());*/
-
-            telemetry.addData("motorFrontLeft: ", h.motorFrontLeft.getPower());
-            telemetry.addData("motorFrontRight: ", h.motorFrontRight.getPower());
-            telemetry.addData("motorBackLeft: ", h.motorBackLeft.getPower());
-            telemetry.addData("motorBackRight: ", h.motorBackRight.getPower());
-            telemetry.addData("left trigger: ", gamepad1.left_trigger);
-
-            //telemetry.addData("motorLaunch: ", h.motorLaunch.getPower());
-            //telemetry.addData("servoIntake: ",  h.servoIntake.getPosition());
-            //telemetry.addData("launchValue: ",launchValue);
-            //telemetry.addData("intakeValue", intakeValue);
             //telemetry.addData("range", String.format("%.01f in", h.distanceSensor.getDistance(DistanceUnit.INCH)));
             //telemetry.addData("Distance: ",h.distanceSensor.getDistance(DistanceUnit.INCH));
             telemetry.update();
             h.driveOmniDir(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
 
 
-
-            /*boolean pressed = gamepad1.y;
 
 
 

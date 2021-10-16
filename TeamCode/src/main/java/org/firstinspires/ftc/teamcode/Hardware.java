@@ -422,11 +422,12 @@ public class Hardware extends LinearOpMode
 
     public void driveOmniDir(double joystickX, double joystickY, double rotation)
      {
-        
+         /**                   | Forward and|
+          *                    | Backwards  |Strafing  | Turning |  */
         motorFrontRight.setPower(joystickY - joystickX - rotation);
-        motorBackRight.setPower(-joystickY + joystickX - rotation);
+        motorBackRight.setPower(joystickY + joystickX - rotation);
         motorFrontLeft.setPower(-joystickY - joystickX - rotation);
-        motorBackLeft.setPower(joystickY + joystickX - rotation);
+        motorBackLeft.setPower(-joystickY + joystickX - rotation);
 
          //motorFrontRight.setPower(joystickY - joystickX + rotation);
          //motorBackRight.setPower(-joystickY - joystickX + rotation);
