@@ -20,15 +20,16 @@ public class Hardware extends LinearOpMode
     public DcMotor motorBackRight;
     public DcMotor motorBackLeft;
     public DcMotor motorFrontLeft;
-
-    public DcMotor motorArm;
-    public DcMotor motorWinch;
+    public DcMotor motorCarousel;
+    public DcMotor motorArm;     //
+    public DcMotor motorWinch;   //
     public DcMotor motorLift;
     public DcMotor motorSpinner;
     public DcMotor motorSwivel;
     public DcMotor motorLaunch;
     public DcMotor motorIntake;
     public DcMotor motorWorm;
+
     //public DcMotor motorLeftLaunch;
 
     Servo markerDropServo;
@@ -38,7 +39,7 @@ public class Hardware extends LinearOpMode
     Servo servoFoundation1;
     Servo servoFoundation2;
     Servo servoSuction;
-    Servo servoIntake;
+    Servo servoIntake; //
 
     CRServo servoSpin;
     CRServo servoSpin2;
@@ -74,9 +75,10 @@ public class Hardware extends LinearOpMode
         motorBackRight = aMap.dcMotor.get("motorBackRight");
         motorBackLeft = aMap.dcMotor.get("motorBackLeft");
         motorFrontLeft = aMap.dcMotor.get("motorFrontLeft");
-        /* motorArm = aMap.dcMotor.get("motorArm");
+        motorArm = aMap.dcMotor.get("motorArm");
         motorWinch = aMap.dcMotor.get("motorWinch");
-        motorSwivel =aMap.dcMotor.get("motorSwivel");*/
+        motorCarousel = aMap.dcMotor.get("motorCarousel");
+        //motorSwivel =aMap.dcMotor.get("motorSwivel");
 
         //motorLeftLaunch = aMap.dcMotor.get("motorLeftLaunch");
        // motorLaunch = aMap.dcMotor.get("motorLaunch");
@@ -110,17 +112,17 @@ public class Hardware extends LinearOpMode
             //motorIntake.setDirection(DcMotorSimple.Direction.FORWARD);
         //motorWorm.setDirection(DcMotorSimple.Direction.FORWARD);
         //motorLeftLaunch.setDirection(DcMotorSimple.Direction.REVERSE);
-       /* motorArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         //motorArm.setTargetPosition(0);
-        //motorArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motorArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //motorArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorArm.setDirection(DcMotorSimple.Direction.FORWARD);
         motorArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        /*motorWinch.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorWinch.setTargetPosition(0);
-        motorWinch.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        motorWinch.setDirection(DcMotorSimple.Direction.REVERSE);
+        motorWinch.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //motorWinch.setTargetPosition(0);
+        motorWinch.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorWinch.setDirection(DcMotorSimple.Direction.FORWARD);
         motorWinch.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 
@@ -130,6 +132,8 @@ public class Hardware extends LinearOpMode
         motorSwivel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motorSwivel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorSwivel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);*/
+
+        motorCarousel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         //motorLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         //motorLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
