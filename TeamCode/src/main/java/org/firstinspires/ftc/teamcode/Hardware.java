@@ -95,7 +95,7 @@ public class Hardware extends LinearOpMode
         servoFoundation2 = aMap.servo.get("servoFoundation2");
         servoSuction = aMap.servo.get("servoSuction");
         */
-        //servoIntake = aMap.servo.get("servoIntake");
+        servoIntake = aMap.servo.get("servoIntake");
         /*
         servoSpin = aMap.crservo.get("servoSpin");
         servoSpin2 = aMap.crservo.get("servoSpin2");

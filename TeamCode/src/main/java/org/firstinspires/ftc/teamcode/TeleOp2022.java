@@ -41,24 +41,29 @@ public class TeleOp2022 extends LinearOpMode
             telemetry.addData("Intake Last Iteration Toggle: ", pressedLastIterationIntake);
             telemetry.addData("motorArm Position: ", h.motorArm.getCurrentPosition());
             telemetry.addData("motorWinch Position: ", h.motorWinch.getCurrentPosition());
-            //telemetry.addData("servoIntake: ", h.servoIntake.getPosition());
+            telemetry.addData("servoIntake: ", h.servoIntake.getPosition());
+            telemetry.addData("rightTrigger: ", gamepad1.right_trigger);
+            telemetry.addData("leftTrigger: ", gamepad1.left_trigger);
+            telemetry.addData("rightBumper: ", gamepad1.right_bumper);
+            telemetry.addData("rightBumper: ", gamepad1.left_bumper);
             telemetry.update();
             h.driveOmniDir(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
 
 
 
-            /**if(pressedIntake & !pressedLastIterationIntake)
+            if(pressedIntake & !pressedLastIterationIntake)
             {
-                if(h.servoIntake.getPosition() == 0)
-                {
-                    h.servoIntake.setPosition(1);
-                }
-                else
+                if(h.servoIntake.getPosition() == 1)
                 {
                     h.servoIntake.setPosition(0);
                 }
+                else
+                {
+                    h.servoIntake.setPosition(1);
+                }
 
-            }*/
+            }
+
             if(pressedCarousel & !pressedLastIterationCarousel)
             {
                 if(h.motorCarousel.getPower() == 0)
@@ -84,13 +89,13 @@ public class TeleOp2022 extends LinearOpMode
                 h.motorArm.setPower(0);
             }
 
-            if(gamepad1.left_trigger > .01 /*&& h.motorWinch.getPosition() < high limit*/)
+            if(gamepad1.left_trigger > .01)
             {
-                h.motorWinch.setPower(0.6);
+                h.motorWinch.setPower(1);
             }
-            if (gamepad1.left_bumper /*&& h.motorWinch.getPosition() > low limit*/)
+            if (gamepad1.left_bumper)
             {
-                h.motorWinch.setPower(-0.6);
+                h.motorWinch.setPower(-0.2);
             }
             if(!gamepad1.left_bumper && gamepad1.left_trigger == 0)
             {
