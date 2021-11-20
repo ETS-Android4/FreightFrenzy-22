@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-@TeleOp(name = "2022 TeleOp", group = "TeleOp")
+@TeleOp(name = "2022 TeleOp -CHOOSE THIS ONE-", group = "TeleOp")
 public class TeleOp2022 extends LinearOpMode
 {
     OpMode opmode;
@@ -95,7 +95,7 @@ public class TeleOp2022 extends LinearOpMode
             }
             if (gamepad1.left_bumper)
             {
-                h.motorWinch.setPower(-0.2);
+                h.motorWinch.setPower(-1);
             }
             if(!gamepad1.left_bumper && gamepad1.left_trigger == 0)
             {
