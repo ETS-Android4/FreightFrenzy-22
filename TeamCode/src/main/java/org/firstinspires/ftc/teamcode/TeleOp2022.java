@@ -68,7 +68,7 @@ public class TeleOp2022 extends LinearOpMode
             {
                 if(h.motorCarousel.getPower() == 0)
                 {
-                    h.motorCarousel.setPower(1);
+                    h.motorCarousel.setPower(.3);
                 }
                 else
                 {
@@ -91,11 +91,11 @@ public class TeleOp2022 extends LinearOpMode
 
             if(gamepad1.left_trigger > .01)
             {
-                h.motorWinch.setPower(1);
+                h.motorWinch.setPower(.5);
             }
             if (gamepad1.left_bumper)
             {
-                h.motorWinch.setPower(-1);
+                h.motorWinch.setPower(-.5);
             }
             if(!gamepad1.left_bumper && gamepad1.left_trigger == 0)
             {
