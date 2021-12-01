@@ -1,15 +1,14 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Disabled
-@Autonomous(name = "Foundation Skystone Autonomous", group = "Linear OpMode")
-public class SkystoneAutononmousBasic extends LinearOpMode {
+@Autonomous(name = "Red Carousel Autonomous---------this one if by red carousel-------", group = "Linear OpMode")
+public class AutonomousFreightFrenzy extends LinearOpMode {
 
     OpMode opmode;
 
@@ -34,8 +33,8 @@ public class SkystoneAutononmousBasic extends LinearOpMode {
             telemetry.addData("Init Error:", "Something failed to initialize");
             e.printStackTrace();
         }
-
-        h.MRgyro.calibrate();
+        h.servoIntake.setPosition(1);
+        /*h.MRgyro.calibrate();
         while(h.MRgyro.isCalibrating() && opModeIsActive())
         {
             telemetry.update();
@@ -44,31 +43,54 @@ public class SkystoneAutononmousBasic extends LinearOpMode {
         telemetry.addData("Calibration", "complete");
         telemetry.addData("Initialization ", "complete");
         telemetry.addData("Heading: ", h.MRgyro.getIntegratedZValue());
-        telemetry.update();
+        telemetry.update();*/
 
 
 
 
         waitForStart();
 
-            h.motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            /*h.motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             h.motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             h.motorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            h.motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            h.motorArm.setTargetPosition(0);
+            h.motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);*/
+            /*h.motorArm.setTargetPosition(0);
             h.motorArm.setPower(1);
-            h.motorArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            h.motorArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);*/
 
-            telemetry.addData("motorFrontLeft encoder value: ",h.motorFrontLeft.getCurrentPosition());
+            /*telemetry.addData("motorFrontLeft encoder value: ",h.motorFrontLeft.getCurrentPosition());
             telemetry.addData("motorFrontRight encoder value: ",h.motorFrontRight.getCurrentPosition());
             telemetry.addData("motorBackLeft encoder value: ",h.motorBackLeft.getCurrentPosition());
-            telemetry.addData("motorBackRight encoder value: ",h.motorBackRight.getCurrentPosition());
+            telemetry.addData("motorBackRight encoder value: ",h.motorBackRight.getCurrentPosition());*/
             telemetry.update();
 
+            h.motorFrontRight.setPower(-.5);
+            h.motorBackRight.setPower(-.5);
+            h.motorFrontLeft.setPower(.5);
+            h.motorBackLeft.setPower(.5);
+            h.sleep(270);
+            h.setDrivePower(0);
+            h.motorFrontRight.setPower(-.5);
+            h.motorBackRight.setPower(+.5);
+            h.motorFrontLeft.setPower(-.5);
+            h.motorBackLeft.setPower(+.5);
+            h.sleep(1350);
+            h.setDrivePower(0);
+            h.motorCarousel.setPower(.3);
+            h.sleep(3000);
+            h.motorFrontRight.setPower(-.5);
+            h.motorBackRight.setPower(-.5);
+            h.motorFrontLeft.setPower(.5);
+            h.motorBackLeft.setPower(.5);
+            h.sleep(700);
+            h.setDrivePower(0);
+
             /*h.strafe(true,50,.7);
+
+
             h.sleep(2500);
             h.turn(360,.5,.1);*/
-            h.drive(true,28,1);
+            /*h.drive(true,28,1);
             h.sleep(1000);
             h.motorArm.setTargetPosition(190);
             h.sleep(1000);
@@ -80,7 +102,7 @@ public class SkystoneAutononmousBasic extends LinearOpMode {
             h.sleep(1000);
             h.motorArm.setTargetPosition(190);
             h.sleep(1000);
-            h.strafe(true,70,1);
+            h.strafe(true,70,1);*/
         /*
             h.motorArm.setTargetPosition(150);
             h.sleep(1000);

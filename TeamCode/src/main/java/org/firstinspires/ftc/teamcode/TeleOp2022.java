@@ -63,6 +63,10 @@ public class TeleOp2022 extends LinearOpMode
                 }
 
             }
+            if (gamepad1.y)
+            {
+                h.servoIntake.setPosition(.2);
+            }
 
             if(pressedCarousel & !pressedLastIterationCarousel)
             {
