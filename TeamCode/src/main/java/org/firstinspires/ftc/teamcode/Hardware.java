@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
@@ -13,6 +14,14 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.Position;
+import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
+import org.firstinspires.ftc.robotcore.external.navigation.UnnormalizedAngleUnit;
 
 public class Hardware extends LinearOpMode
 {
@@ -50,6 +59,11 @@ public class Hardware extends LinearOpMode
 
     ModernRoboticsI2cGyro MRgyro;
     ModernRoboticsI2cRangeSensor MRRange;
+
+    BNO055IMU imu;
+    Orientation angles;
+    private double previousHeading = 0; //Outside of method
+    private double integratedHeading = 0;
 
     //private HardwareMap aMap;
     DcMotor.RunMode initialMode = null;
@@ -145,6 +159,7 @@ public class Hardware extends LinearOpMode
         // motorSwivel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
        // motorArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         //motorWinch.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
 
 
         motorFrontRight.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -340,7 +355,6 @@ public class Hardware extends LinearOpMode
 
 
     }
-
     public void strafe(boolean left, int distanceInches,double power)
     {
         int distanceEncodeVal;
@@ -439,6 +453,26 @@ public class Hardware extends LinearOpMode
          //motorBackLeft.setPower(joystickY + joystickX - rotation);
     }
 
+    public double getIntegratedHeading() {
+        double currentHeading = imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).thirdAngle;
+        double deltaHeading = currentHeading - previousHeading;
+
+        if (deltaHeading < -180) {
+            deltaHeading += 360;
+        } else if (deltaHeading >= 180) {
+            deltaHeading -= 360;
+        }
+
+        integratedHeading += deltaHeading;
+        previousHeading = currentHeading;
+
+        if (integratedHeading < 0)
+        {
+            return integratedHeading + 360;
+        }
+        else return integratedHeading;
+
+    }
     public void turn(int targetDegrees, double power, double correctionPower)
     {
 
@@ -447,11 +481,12 @@ public class Hardware extends LinearOpMode
         motorFrontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motorBackRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
+    //Right is up to +180
+    //Left is up to -180
 
-
-//Right is all positive
-//Left is all negative
-//Straight is left positive. Right negative.
+    //Right is all positive
+    //Left is all negative
+    //Straight is left positive. Right negative.
         if(targetDegrees == 0)
         {
             //Tell robot to correct to straight forward
@@ -462,8 +497,8 @@ public class Hardware extends LinearOpMode
 
                 motorFrontLeft.setPower(-power);
                 motorBackLeft.setPower(-power);
-                motorFrontRight.setPower(power);
-                motorBackRight.setPower(power);
+                motorFrontRight.setPower(-power);
+                motorBackRight.setPower(-power);
 
                 while(MRgyro.getIntegratedZValue() > targetDegrees)
                 {
@@ -601,6 +636,183 @@ public class Hardware extends LinearOpMode
             {
                 telemetry.addData("Target Value: ", targetDegrees);
                 telemetry.addData("Current Value: ", MRgyro.getIntegratedZValue());
+                telemetry.update();
+                try {
+                    Thread.sleep(20);
+                }catch(Exception e){}
+                idle();
+            }
+        }
+
+        motorFrontLeft.setPower(0);
+        motorBackLeft.setPower(0);
+        motorFrontRight.setPower(0);
+        motorBackRight.setPower(0);
+    }
+
+    public void turnIMU(int targetDegrees, double power, double correctionPower)
+    {
+
+        motorFrontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        motorBackLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        motorFrontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        motorBackRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        //Right is up to +180
+        //Left is up to -180
+
+        //Right is all positive
+        //Left is all negative
+        //Straight is left positive. Right negative.
+        if(targetDegrees == 0)
+        {
+            //Tell robot to correct to straight forward
+
+            if(getIntegratedHeading() > 0)
+            {
+                //If the MRgyro reads back left from zero
+
+                motorFrontLeft.setPower(-power);
+                motorBackLeft.setPower(-power);
+                motorFrontRight.setPower(-power);
+                motorBackRight.setPower(-power);
+
+                while(getIntegratedHeading() > targetDegrees)
+                {
+
+                    telemetry.addData("Target Value: ", targetDegrees);
+                    telemetry.addData("Current Value: ", getIntegratedHeading());
+                    telemetry.update();
+
+                    try {
+                        Thread.sleep(20);
+                    }catch(Exception e){}
+                    idle();
+                }
+
+                motorFrontLeft.setPower(correctionPower);
+                motorBackLeft.setPower(correctionPower);
+                motorFrontRight.setPower(-correctionPower);
+                motorBackRight.setPower(-correctionPower);
+
+                while(getIntegratedHeading() < targetDegrees)
+                {
+                    telemetry.addData("Target Value: ", targetDegrees);
+                    telemetry.addData("Current Value: ", getIntegratedHeading());
+                    telemetry.update();
+                    try {
+                        Thread.sleep(20);
+                    }catch(Exception e){}
+                    idle();
+                }
+            }
+            if(getIntegratedHeading() < 0)
+            {
+                //If the MRgyro reads back right from zero
+
+                motorFrontLeft.setPower(power);
+                motorBackLeft.setPower(power);
+                motorFrontRight.setPower(-power);
+                motorBackRight.setPower(-power);
+
+                while(getIntegratedHeading() < targetDegrees)
+                {
+                    telemetry.addData("Target Value: ", targetDegrees);
+                    telemetry.addData("Current Value: ", getIntegratedHeading());
+                    telemetry.update();
+
+                    try {
+                        Thread.sleep(20);
+                    }catch(Exception e){}
+                    idle();
+                }
+                motorFrontLeft.setPower(-correctionPower);
+                motorBackLeft.setPower(-correctionPower);
+                motorFrontRight.setPower(correctionPower);
+                motorBackRight.setPower(correctionPower);
+
+                while(getIntegratedHeading() > targetDegrees)
+                {
+                    telemetry.addData("Target Value: ", targetDegrees);
+                    telemetry.addData("Current Value: ", getIntegratedHeading());
+                    telemetry.update();
+                    try {
+                        Thread.sleep(20);
+                    }catch(Exception e){}
+                    idle();
+                }
+            }
+            motorFrontLeft.setPower(0);
+            motorBackLeft.setPower(0);
+            motorFrontRight.setPower(0);
+            motorBackRight.setPower(0);
+        }
+////////////////////////////////////////////////////////////////////////////////////////////////////
+        if(targetDegrees > 0)
+        {
+            //TURNING LEFT
+            motorFrontLeft.setPower(-power);
+            motorBackLeft.setPower(-power);
+            motorFrontRight.setPower(-power);
+            motorBackRight.setPower(-power);
+
+            while(getIntegratedHeading() < targetDegrees)
+            {
+                telemetry.addData("Target Value: ", targetDegrees);
+                telemetry.addData("Current Value: ", getIntegratedHeading());
+                telemetry.update();
+
+                try {
+                    Thread.sleep(20);
+                }catch(Exception e){}
+                idle();
+            }
+
+            motorFrontLeft.setPower(correctionPower);
+            motorBackLeft.setPower(correctionPower);
+            motorFrontRight.setPower(correctionPower);
+            motorBackRight.setPower(correctionPower);
+
+            while(getIntegratedHeading() > targetDegrees)
+            {
+                telemetry.addData("Target Value: ", targetDegrees);
+                telemetry.addData("Current Value: ", getIntegratedHeading());
+                telemetry.update();
+                try {
+                    Thread.sleep(20);
+                }catch(Exception e){}
+                idle();
+            }
+        }
+        else
+        {
+
+            //TURNING RIGHT
+            motorFrontLeft.setPower(power);
+            motorBackLeft.setPower(power);
+            motorFrontRight.setPower(power);
+            motorBackRight.setPower(power);
+
+            while(getIntegratedHeading() > targetDegrees)
+            {
+                telemetry.addData("Target Value: ", targetDegrees);
+                telemetry.addData("Current Value: ", getIntegratedHeading());
+                telemetry.update();
+
+                try {
+                    Thread.sleep(20);
+                }catch(Exception e){}
+                idle();
+            }
+            motorFrontLeft.setPower(-correctionPower);
+            motorBackLeft.setPower(-correctionPower);
+            motorFrontRight.setPower(-correctionPower);
+            motorBackRight.setPower(-correctionPower);
+
+            while(getIntegratedHeading() < targetDegrees)
+            {
+                telemetry.addData("Target Value: ", targetDegrees);
+                telemetry.addData("Current Value: ", getIntegratedHeading());
                 telemetry.update();
                 try {
                     Thread.sleep(20);

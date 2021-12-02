@@ -1,14 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name = "Red Carousel Autonomous---------this one if by red carousel-------", group = "Linear OpMode")
-public class AutonomousFreightFrenzy extends LinearOpMode {
+@Autonomous(name = "Blue Carousel Autonomous---------this one if by blue carousel-------", group = "Linear OpMode")
+public class AutonomousFreightFrenzy_BlueCarousel extends LinearOpMode {
 
     OpMode opmode;
 
@@ -33,8 +32,25 @@ public class AutonomousFreightFrenzy extends LinearOpMode {
             telemetry.addData("Init Error:", "Something failed to initialize");
             e.printStackTrace();
         }
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+
+        parameters.mode                = BNO055IMU.SensorMode.IMU;
+        parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.loggingEnabled      = false;
+
+        // Retrieve and initialize the IMU. We expect the IMU to be attached to an I2C port
+        // on a Core Device Interface Module, configured to be a sensor of type "AdaFruit IMU",
+        // and named "imu".
+        h.imu = hardwareMap.get(BNO055IMU.class, "imu");
+
+        h.imu.initialize(parameters);
+
         h.servoIntake.setPosition(1);
+
+
         /*h.MRgyro.calibrate();
+
         while(h.MRgyro.isCalibrating() && opModeIsActive())
         {
             telemetry.update();
@@ -62,29 +78,44 @@ public class AutonomousFreightFrenzy extends LinearOpMode {
             telemetry.addData("motorFrontRight encoder value: ",h.motorFrontRight.getCurrentPosition());
             telemetry.addData("motorBackLeft encoder value: ",h.motorBackLeft.getCurrentPosition());
             telemetry.addData("motorBackRight encoder value: ",h.motorBackRight.getCurrentPosition());*/
-            telemetry.update();
 
+            telemetry.update();
+            h.turnIMU(90,.5,.3);
+            /*
+            //Forward
             h.motorFrontRight.setPower(-.5);
             h.motorBackRight.setPower(-.5);
             h.motorFrontLeft.setPower(.5);
             h.motorBackLeft.setPower(.5);
             h.sleep(270);
             h.setDrivePower(0);
-            h.motorFrontRight.setPower(-.5);
-            h.motorBackRight.setPower(+.5);
-            h.motorFrontLeft.setPower(-.5);
-            h.motorBackLeft.setPower(+.5);
-            h.sleep(1350);
-            h.setDrivePower(0);
-            h.motorCarousel.setPower(.3);
-            h.sleep(3000);
-            h.motorFrontRight.setPower(-.5);
-            h.motorBackRight.setPower(-.5);
-            h.motorFrontLeft.setPower(.5);
-            h.motorBackLeft.setPower(.5);
-            h.sleep(700);
+
+            //Turn Left
+            h.motorFrontRight.setPower(-.2);
+            h.motorBackRight.setPower(-.2);
+            h.motorFrontLeft.setPower(-.2);
+            h.motorBackLeft.setPower(-.2);
+            h.sleep(3700);
             h.setDrivePower(0);
 
+            //Backwards
+            h.motorFrontRight.setPower(+.5);
+            h.motorBackRight.setPower(+.5);
+            h.motorFrontLeft.setPower(-.5);
+            h.motorBackLeft.setPower(-.5);
+            h.sleep(1350);
+            h.setDrivePower(0);
+
+            h.motorCarousel.setPower(-.3);
+            h.sleep(3000);
+
+            //Strafe Right
+            h.motorFrontRight.setPower(+.5);
+            h.motorBackRight.setPower(-.5);
+            h.motorFrontLeft.setPower(+.5);
+            h.motorBackLeft.setPower(-.5);
+            h.sleep(1200);
+            h.setDrivePower(0);*/
             /*h.strafe(true,50,.7);
 
 
@@ -148,13 +179,14 @@ public class AutonomousFreightFrenzy extends LinearOpMode {
 
             h.motorArm.setTargetPosition(100);
             h.servoSwivel.setPosition(100);*/
-        /*while (opModeIsActive())
+        while (opModeIsActive())
         {
-            telemetry.addData("motorFrontLeft encoder value: ",h.motorFrontLeft.getCurrentPosition());
+            /*telemetry.addData("motorFrontLeft encoder value: ",h.motorFrontLeft.getCurrentPosition());
             telemetry.addData("motorFrontRight encoder value: ",h.motorFrontRight.getCurrentPosition());
             telemetry.addData("motorBackLeft encoder value: ",h.motorBackLeft.getCurrentPosition());
-            telemetry.addData("motorBackRight encoder value: ",h.motorBackRight.getCurrentPosition());
+            telemetry.addData("motorBackRight encoder value: ",h.motorBackRight.getCurrentPosition());*/
+            telemetry.addData("Heading: ", h.getIntegratedHeading());
             telemetry.update();
-        }*/
+        }
     }
 }

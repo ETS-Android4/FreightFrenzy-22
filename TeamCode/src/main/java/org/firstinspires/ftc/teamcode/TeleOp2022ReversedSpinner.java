@@ -3,10 +3,9 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-@TeleOp(name = "2022 TeleOp -CHOOSE THIS ONE-", group = "TeleOp")
-public class TeleOp2022 extends LinearOpMode
+@TeleOp(name = "2022 TeleOp REVERSED -CHOOSE THIS ONE IF REVERSED-", group = "TeleOp")
+public class TeleOp2022ReversedSpinner extends LinearOpMode
 {
     OpMode opmode;
 
@@ -70,19 +69,7 @@ public class TeleOp2022 extends LinearOpMode
                 h.servoIntake.setPosition(.2);
             }
 
-            if(pressedCarousel & !pressedLastIterationCarousel)
-            {
-                if(h.motorCarousel.getPower() == 0)
-                {
-                    h.motorCarousel.setPower(.3);
-                }
-                else
-                {
-                    h.motorCarousel.setPower(0);
-                }
-
-            }
-            /*if(pressedCarouselReverse & !pressedLastIterationCarouselReverse)
+            if(pressedCarouselReverse & !pressedLastIterationCarouselReverse)
             {
                 if(h.motorCarousel.getPower() == 0)
                 {
@@ -93,7 +80,7 @@ public class TeleOp2022 extends LinearOpMode
                     h.motorCarousel.setPower(0);
                 }
 
-            }*/
+            }
             if(gamepad1.right_trigger > .01 /*&& h.motorArm.getPosition() < high limit*/)
             {
                 h.motorArm.setPower(1);
