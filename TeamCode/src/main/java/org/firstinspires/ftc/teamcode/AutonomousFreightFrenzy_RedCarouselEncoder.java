@@ -1,14 +1,16 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name = "Red Carousel Autonomous---------this one if by red carousel-------", group = "Linear OpMode")
-public class AutonomousFreightFrenzy_RedCarousel extends LinearOpMode {
+@Autonomous(name = "Red Carousel Autonomous Encoder", group = "Linear OpMode")
+@Disabled
+public class AutonomousFreightFrenzy_RedCarouselEncoder extends LinearOpMode {
 
     OpMode opmode;
 
@@ -34,6 +36,20 @@ public class AutonomousFreightFrenzy_RedCarousel extends LinearOpMode {
             e.printStackTrace();
         }
         h.servoIntake.setPosition(1);
+
+        h.motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        h.motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        h.motorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        h.motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        h.motorFrontRight.setTargetPosition(0);
+        h.motorFrontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        h.motorBackRight.setTargetPosition(0);
+        h.motorBackRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        h.motorFrontLeft.setTargetPosition(0);
+        h.motorFrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        h.motorBackLeft.setTargetPosition(0);
+        h.motorBackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         /*h.MRgyro.calibrate();
         while(h.MRgyro.isCalibrating() && opModeIsActive())
         {
@@ -64,33 +80,21 @@ public class AutonomousFreightFrenzy_RedCarousel extends LinearOpMode {
             telemetry.addData("motorBackRight encoder value: ",h.motorBackRight.getCurrentPosition());*/
             telemetry.update();
 
-            /** MOVE FORWARD FOR 270 TO PREPARE FOR MOVE TO CAROUSEL **/
-            h.motorFrontRight.setPower(-.5);
-            h.motorBackRight.setPower(-.5);
-            h.motorFrontLeft.setPower(.5);
-            h.motorBackLeft.setPower(.5);
+            /** DRIVE FORWARD TO PREPARE FOR CAROUSEL **/
+            h.drive(true,2,.5);
             h.sleep(270);
-            h.setDrivePower(0);
 
-            /** STRAFE LEFT FOR 1350 TO CAROUSEL **/
-            h.motorFrontRight.setPower(-.5);
-            h.motorBackRight.setPower(+.5);
-            h.motorFrontLeft.setPower(-.5);
-            h.motorBackLeft.setPower(+.5);
+            /** STRAFE TO CAROUSEL **/
+            h.strafe(true,10,.5);
             h.sleep(1350);
-            h.setDrivePower(0);
 
             /** SPIN CAROUSEL **/
             h.motorCarousel.setPower(.3);
             h.sleep(3000);
 
-            /** MOVE FORWARD 700 INTO PARKING ZONE**/
-            h.motorFrontRight.setPower(-.5);
-            h.motorBackRight.setPower(-.5);
-            h.motorFrontLeft.setPower(.5);
-            h.motorBackLeft.setPower(.5);
+            /** DRIVE TO PARKING ZONE **/
+            h.drive(true, 10,.5);
             h.sleep(700);
-            h.setDrivePower(0);
 
             /*h.strafe(true,50,.7);
 
@@ -155,13 +159,13 @@ public class AutonomousFreightFrenzy_RedCarousel extends LinearOpMode {
 
             h.motorArm.setTargetPosition(100);
             h.servoSwivel.setPosition(100);*/
-        /*while (opModeIsActive())
+        while (opModeIsActive())
         {
             telemetry.addData("motorFrontLeft encoder value: ",h.motorFrontLeft.getCurrentPosition());
             telemetry.addData("motorFrontRight encoder value: ",h.motorFrontRight.getCurrentPosition());
             telemetry.addData("motorBackLeft encoder value: ",h.motorBackLeft.getCurrentPosition());
             telemetry.addData("motorBackRight encoder value: ",h.motorBackRight.getCurrentPosition());
             telemetry.update();
-        }*/
+        }
     }
 }

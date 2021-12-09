@@ -21,7 +21,7 @@ public class TeleOp2022 extends LinearOpMode
             telemetry.addData("Init Error:", "Something failed to initialize");
             e.printStackTrace();
         }
-
+        h.servoIntake.setPosition(1);
         telemetry.addData("Main Initialization ", "complete");
         telemetry.update();
 
@@ -50,7 +50,34 @@ public class TeleOp2022 extends LinearOpMode
             telemetry.addData("rightBumper: ", gamepad1.left_bumper);
             telemetry.update();
             h.driveOmniDir(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
-
+            if(gamepad1.dpad_left)
+            {
+                h.motorFrontLeft.setPower(-.2);
+                h.motorFrontRight.setPower(-.2);
+                h.motorBackLeft.setPower(-.2);
+                h.motorBackRight.setPower(-.2);
+            }
+            else if (gamepad1.dpad_right)
+            {
+                h.motorFrontLeft.setPower(.2);
+                h.motorFrontRight.setPower(.2);
+                h.motorBackLeft.setPower(.2);
+                h.motorBackRight.setPower(.2);
+            }
+            if(gamepad1.dpad_up)
+            {
+                h.motorFrontLeft.setPower(.2);
+                h.motorFrontRight.setPower(-.2);
+                h.motorBackLeft.setPower(.2);
+                h.motorBackRight.setPower(-.2);
+            }
+            else if(gamepad1.dpad_down)
+            {
+                h.motorFrontLeft.setPower(-.2);
+                h.motorFrontRight.setPower(.2);
+                h.motorBackLeft.setPower(-.2);
+                h.motorBackRight.setPower(.2);
+            }
 
 
             if(pressedIntake & !pressedLastIterationIntake)
@@ -65,6 +92,7 @@ public class TeleOp2022 extends LinearOpMode
                 }
 
             }
+
             if (gamepad1.y)
             {
                 h.servoIntake.setPosition(.2);
@@ -72,9 +100,13 @@ public class TeleOp2022 extends LinearOpMode
 
             if(pressedCarousel & !pressedLastIterationCarousel)
             {
-                if(h.motorCarousel.getPower() == 0)
+                if(h.motorCarousel.getPower() == 0 && gamepad1.b)
                 {
                     h.motorCarousel.setPower(.3);
+                }
+                else if(h.motorCarousel.getPower() == 0)
+                {
+                    h.motorCarousel.setPower(-.3);
                 }
                 else
                 {

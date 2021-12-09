@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp(name = "2022 TeleOp REVERSED -CHOOSE THIS ONE IF REVERSED-", group = "TeleOp")
+@Disabled
 public class TeleOp2022ReversedSpinner extends LinearOpMode
 {
     OpMode opmode;
@@ -69,9 +71,9 @@ public class TeleOp2022ReversedSpinner extends LinearOpMode
                 h.servoIntake.setPosition(.2);
             }
 
-            if(pressedCarouselReverse & !pressedLastIterationCarouselReverse)
+            if(pressedCarousel & !pressedLastIterationCarousel)
             {
-                if(h.motorCarousel.getPower() == 0)
+                if(h.motorCarousel.getPower() == 0 )
                 {
                     h.motorCarousel.setPower(-.3);
                 }

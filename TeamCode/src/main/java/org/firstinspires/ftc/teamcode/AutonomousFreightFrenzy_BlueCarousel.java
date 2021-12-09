@@ -80,8 +80,8 @@ public class AutonomousFreightFrenzy_BlueCarousel extends LinearOpMode {
             telemetry.addData("motorBackRight encoder value: ",h.motorBackRight.getCurrentPosition());*/
 
             telemetry.update();
-            h.turnIMU(90,.5,.3);
-            /*
+            //h.turnIMU(90,.5,.3)
+
             //Forward
             h.motorFrontRight.setPower(-.5);
             h.motorBackRight.setPower(-.5);
@@ -91,10 +91,7 @@ public class AutonomousFreightFrenzy_BlueCarousel extends LinearOpMode {
             h.setDrivePower(0);
 
             //Turn Left
-            h.motorFrontRight.setPower(-.2);
-            h.motorBackRight.setPower(-.2);
-            h.motorFrontLeft.setPower(-.2);
-            h.motorBackLeft.setPower(-.2);
+            h.turnIMU(90,.5,.3);
             h.sleep(3700);
             h.setDrivePower(0);
 
@@ -107,15 +104,15 @@ public class AutonomousFreightFrenzy_BlueCarousel extends LinearOpMode {
             h.setDrivePower(0);
 
             h.motorCarousel.setPower(-.3);
-            h.sleep(3000);
+            h.sleep(3500);
 
             //Strafe Right
             h.motorFrontRight.setPower(+.5);
             h.motorBackRight.setPower(-.5);
             h.motorFrontLeft.setPower(+.5);
             h.motorBackLeft.setPower(-.5);
-            h.sleep(1200);
-            h.setDrivePower(0);*/
+            h.sleep(1300);
+            h.setDrivePower(0);
             /*h.strafe(true,50,.7);
 
 

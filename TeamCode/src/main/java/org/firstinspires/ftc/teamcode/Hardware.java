@@ -167,6 +167,7 @@ public class Hardware extends LinearOpMode
         motorFrontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
         motorBackLeft.setDirection(DcMotorSimple.Direction.FORWARD);
 
+
         telemetry.addData("past set direction","");
         telemetry.update();
 
@@ -195,16 +196,16 @@ public class Hardware extends LinearOpMode
         if(forward)
         {
             motorFrontLeft.setTargetPosition(distanceEncodeVal);
-            motorFrontRight.setTargetPosition(distanceEncodeVal);
+            motorFrontRight.setTargetPosition(-distanceEncodeVal);
             motorBackLeft.setTargetPosition(distanceEncodeVal);
-            motorBackRight.setTargetPosition(distanceEncodeVal);
+            motorBackRight.setTargetPosition(-distanceEncodeVal);
         }
         else
         {
             motorFrontLeft.setTargetPosition(-distanceEncodeVal);
-            motorFrontRight.setTargetPosition(-distanceEncodeVal);
+            motorFrontRight.setTargetPosition(distanceEncodeVal);
             motorBackLeft.setTargetPosition(-distanceEncodeVal);
-            motorBackRight.setTargetPosition(-distanceEncodeVal);
+            motorBackRight.setTargetPosition(distanceEncodeVal);
         }
 
         motorFrontLeft.setPower(power);
@@ -231,7 +232,7 @@ public class Hardware extends LinearOpMode
         if(forward)
         {
 
-            while (motorFrontLeft.getCurrentPosition() < distanceEncodeVal - 20)
+            while (motorFrontLeft.getCurrentPosition() < distanceEncodeVal - 20 && opModeIsActive())
             {
 
             }
@@ -239,7 +240,7 @@ public class Hardware extends LinearOpMode
         else
         {
 
-            while (motorFrontLeft.getCurrentPosition() > -distanceEncodeVal + 20)
+            while (motorFrontLeft.getCurrentPosition() > -distanceEncodeVal + 20 && opModeIsActive())
             {
 
             }
@@ -271,7 +272,6 @@ public class Hardware extends LinearOpMode
 
     public void TestDrive(boolean forward, int distanceInches, double power)
     {
-
         int distanceEncodeVal;
 
         motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -287,16 +287,16 @@ public class Hardware extends LinearOpMode
         if(forward)
         {
             motorFrontLeft.setTargetPosition(distanceEncodeVal);
-            motorFrontRight.setTargetPosition(distanceEncodeVal);
+            motorFrontRight.setTargetPosition(-distanceEncodeVal);
             motorBackLeft.setTargetPosition(distanceEncodeVal);
-            motorBackRight.setTargetPosition(distanceEncodeVal);
+            motorBackRight.setTargetPosition(-distanceEncodeVal);
         }
         else
         {
             motorFrontLeft.setTargetPosition(-distanceEncodeVal);
-            motorFrontRight.setTargetPosition(-distanceEncodeVal);
+            motorFrontRight.setTargetPosition(distanceEncodeVal);
             motorBackLeft.setTargetPosition(-distanceEncodeVal);
-            motorBackRight.setTargetPosition(-distanceEncodeVal);
+            motorBackRight.setTargetPosition(distanceEncodeVal);
         }
 
         motorFrontLeft.setPower(power);
@@ -320,18 +320,24 @@ public class Hardware extends LinearOpMode
         //telemetry.addData("Running", "...");
         //telemetry.update();
 
-        /*try{
-            Thread.sleep(10000);
-
-        }catch(Exception e){}*/
-        while (motorFrontLeft.getCurrentPosition() < distanceEncodeVal - 20)
+        if(forward)
         {
-            try{
-                Thread.sleep(500);
 
-            }catch(Exception e){}
+            if(motorFrontLeft.getCurrentPosition() < distanceEncodeVal - 20)
+            {
+                sleep(100);
+            }
+
         }
+        else
+        {
 
+            if(motorFrontLeft.getCurrentPosition() > -distanceEncodeVal + 20)
+            {
+                sleep(100);
+            }
+
+        }
 
         //telemetry.addData("Finished", ".");
         //telemetry.update();
@@ -341,17 +347,19 @@ public class Hardware extends LinearOpMode
         /*motorFrontLeft.setTargetPosition(0);
         motorFrontRight.setTargetPosition(0);
         motorBackLeft.setTargetPosition(0);
-        motorBackRight.setTargetPosition(0);
+        motorBackRight.setTargetPosition(0);*/
 
         motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);*/
+        motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         motorFrontLeft.setPower(0);
         motorFrontRight.setPower(0);
         motorBackLeft.setPower(0);
         motorBackRight.setPower(0);
+
+
 
 
     }
@@ -372,16 +380,16 @@ public class Hardware extends LinearOpMode
         if(left)
         {
             motorFrontLeft.setTargetPosition(-distanceEncodeVal);
-            motorFrontRight.setTargetPosition(distanceEncodeVal);
+            motorFrontRight.setTargetPosition(-distanceEncodeVal);
             motorBackLeft.setTargetPosition(distanceEncodeVal);
-            motorBackRight.setTargetPosition(-distanceEncodeVal);
+            motorBackRight.setTargetPosition(distanceEncodeVal);
         }
         else
         {
             motorFrontLeft.setTargetPosition(distanceEncodeVal);
-            motorFrontRight.setTargetPosition(-distanceEncodeVal);
+            motorFrontRight.setTargetPosition(distanceEncodeVal);
             motorBackLeft.setTargetPosition(-distanceEncodeVal);
-            motorBackRight.setTargetPosition(distanceEncodeVal);
+            motorBackRight.setTargetPosition(-distanceEncodeVal);
         }
 
         motorFrontLeft.setPower(power);
