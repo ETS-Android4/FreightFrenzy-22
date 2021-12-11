@@ -9,7 +9,6 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous(name = "Red Carousel Autonomous Encoder", group = "Linear OpMode")
-@Disabled
 public class AutonomousFreightFrenzy_RedCarouselEncoder extends LinearOpMode {
 
     OpMode opmode;
@@ -81,7 +80,7 @@ public class AutonomousFreightFrenzy_RedCarouselEncoder extends LinearOpMode {
             telemetry.update();
 
             /** DRIVE FORWARD TO PREPARE FOR CAROUSEL **/
-            h.drive(true,2,.5);
+            h.TestDrive(true,2,.5);
             h.sleep(270);
 
             /** STRAFE TO CAROUSEL **/
@@ -93,7 +92,7 @@ public class AutonomousFreightFrenzy_RedCarouselEncoder extends LinearOpMode {
             h.sleep(3000);
 
             /** DRIVE TO PARKING ZONE **/
-            h.drive(true, 10,.5);
+            h.TestDrive(true, 10,.5);
             h.sleep(700);
 
             /*h.strafe(true,50,.7);

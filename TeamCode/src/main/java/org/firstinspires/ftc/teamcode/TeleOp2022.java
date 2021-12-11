@@ -48,6 +48,10 @@ public class TeleOp2022 extends LinearOpMode
             telemetry.addData("leftTrigger: ", gamepad1.left_trigger);
             telemetry.addData("rightBumper: ", gamepad1.right_bumper);
             telemetry.addData("rightBumper: ", gamepad1.left_bumper);
+            telemetry.addData("motorFrontLeft encoder value: ",h.motorFrontLeft.getCurrentPosition());
+            telemetry.addData("motorFrontRight encoder value: ",h.motorFrontRight.getCurrentPosition());
+            telemetry.addData("motorBackLeft encoder value: ",h.motorBackLeft.getCurrentPosition());
+            telemetry.addData("motorBackRight encoder value: ",h.motorBackRight.getCurrentPosition());
             telemetry.update();
             h.driveOmniDir(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
             if(gamepad1.dpad_left)
