@@ -36,7 +36,7 @@ public class AutonomousFreightFrenzy_RedCarouselEncoder extends LinearOpMode {
         }
         h.servoIntake.setPosition(1);
 
-        h.motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        /*h.motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         h.motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         h.motorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         h.motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -48,7 +48,7 @@ public class AutonomousFreightFrenzy_RedCarouselEncoder extends LinearOpMode {
         h.motorFrontLeft.setTargetPosition(0);
         h.motorFrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         h.motorBackLeft.setTargetPosition(0);
-        h.motorBackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        h.motorBackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);*/
         /*h.MRgyro.calibrate();
         while(h.MRgyro.isCalibrating() && opModeIsActive())
         {
@@ -79,21 +79,80 @@ public class AutonomousFreightFrenzy_RedCarouselEncoder extends LinearOpMode {
             telemetry.addData("motorBackRight encoder value: ",h.motorBackRight.getCurrentPosition());*/
             telemetry.update();
 
-            /** DRIVE FORWARD TO PREPARE FOR CAROUSEL **/
-            h.TestDrive(true,2,.5);
-            h.sleep(270);
+            h.motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            h.motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            h.motorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            h.motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-            /** STRAFE TO CAROUSEL **/
-            h.strafe(true,10,.5);
-            h.sleep(1350);
+            h.motorFrontLeft.setTargetPosition(500);
+            h.motorFrontRight.setTargetPosition(-500);
+            h.motorBackLeft.setTargetPosition(500);
+            h.motorBackRight.setTargetPosition(-500);
 
-            /** SPIN CAROUSEL **/
+            h.motorFrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            h.motorFrontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            h.motorBackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            h.motorBackRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            h.setDrivePower((float) 0.2);
+
+
+            h.sleep(2000);
+
+
+            h.motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            h.motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            h.motorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            h.motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+            h.motorFrontLeft.setTargetPosition(-2000);
+            h.motorFrontRight.setTargetPosition(-2000);
+            h.motorBackLeft.setTargetPosition(2000);
+            h.motorBackRight.setTargetPosition(2000);
+
+            h.motorFrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            h.motorFrontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            h.motorBackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            h.motorBackRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            h.setDrivePower((float) 0.2);
+
+            h.sleep(3000);
+
             h.motorCarousel.setPower(.3);
             h.sleep(3000);
 
+            h.motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            h.motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            h.motorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            h.motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+            h.motorFrontLeft.setTargetPosition(2000);
+            h.motorFrontRight.setTargetPosition(-2000);
+            h.motorBackLeft.setTargetPosition(2000);
+            h.motorBackRight.setTargetPosition(-2000);
+
+            h.motorFrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            h.motorFrontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            h.motorBackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            h.motorBackRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            h.setDrivePower((float) 0.2);
+
+
+            /** DRIVE FORWARD TO PREPARE FOR CAROUSEL **/
+           /* h.TestDrive(true,20,.5);
+            h.sleep(270);
+
+            /** STRAFE TO CAROUSEL **/
+            /*h.strafe(true,10,.5);
+            h.sleep(1350);
+
+            /** SPIN CAROUSEL **/
+           /* h.motorCarousel.setPower(.3);
+            h.sleep(3000);
+
             /** DRIVE TO PARKING ZONE **/
-            h.TestDrive(true, 10,.5);
-            h.sleep(700);
+           /* h.TestDrive(true, 10,.5);
+            h.sleep(700);*/
 
             /*h.strafe(true,50,.7);
 

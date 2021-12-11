@@ -32,50 +32,45 @@ public class TeleOp2022 extends LinearOpMode
         waitForStart();
         while (opModeIsActive())
         {
-            boolean pressedCarousel = gamepad1.a;
+            boolean pressedCarousel = gamepad2.a;
             boolean pressedIntake = gamepad1.x;
-            boolean pressedCarouselReverse = gamepad1.b;
             //telemetry.addData("range", String.format("%.01f in", h.distanceSensor.getDistance(DistanceUnit.INCH)));
             //telemetry.addData("Distance: ",h.distanceSensor.getDistance(DistanceUnit.INCH));
-            telemetry.addData("Carousel Toggle: ", pressedCarousel);
-            telemetry.addData("Carousel Last Iteration Toggle: ", pressedLastIterationCarousel);
-            telemetry.addData("Intake Toggle: ", pressedIntake);
-            telemetry.addData("Intake Last Iteration Toggle: ", pressedLastIterationIntake);
             telemetry.addData("motorArm Position: ", h.motorArm.getCurrentPosition());
             telemetry.addData("motorWinch Position: ", h.motorWinch.getCurrentPosition());
             telemetry.addData("servoIntake: ", h.servoIntake.getPosition());
-            telemetry.addData("rightTrigger: ", gamepad1.right_trigger);
-            telemetry.addData("leftTrigger: ", gamepad1.left_trigger);
-            telemetry.addData("rightBumper: ", gamepad1.right_bumper);
-            telemetry.addData("rightBumper: ", gamepad1.left_bumper);
+            telemetry.addData("dpad_left: ", gamepad1.dpad_left);
+            telemetry.addData("dpad_right: ", gamepad1.dpad_right);
+            telemetry.addData("dpad_down: ", gamepad1.dpad_down);
+            telemetry.addData("dpad_up: ", gamepad1.dpad_up);
             telemetry.addData("motorFrontLeft encoder value: ",h.motorFrontLeft.getCurrentPosition());
             telemetry.addData("motorFrontRight encoder value: ",h.motorFrontRight.getCurrentPosition());
             telemetry.addData("motorBackLeft encoder value: ",h.motorBackLeft.getCurrentPosition());
             telemetry.addData("motorBackRight encoder value: ",h.motorBackRight.getCurrentPosition());
             telemetry.update();
             h.driveOmniDir(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
-            if(gamepad1.dpad_left)
+            if(gamepad1.dpad_left || gamepad2.dpad_left)
             {
                 h.motorFrontLeft.setPower(-.2);
                 h.motorFrontRight.setPower(-.2);
                 h.motorBackLeft.setPower(-.2);
                 h.motorBackRight.setPower(-.2);
             }
-            else if (gamepad1.dpad_right)
+            else if (gamepad1.dpad_right || gamepad2.dpad_right)
             {
                 h.motorFrontLeft.setPower(.2);
                 h.motorFrontRight.setPower(.2);
                 h.motorBackLeft.setPower(.2);
                 h.motorBackRight.setPower(.2);
             }
-            if(gamepad1.dpad_up)
+            if(gamepad1.dpad_up || gamepad2.dpad_up)
             {
                 h.motorFrontLeft.setPower(.2);
                 h.motorFrontRight.setPower(-.2);
                 h.motorBackLeft.setPower(.2);
                 h.motorBackRight.setPower(-.2);
             }
-            else if(gamepad1.dpad_down)
+            else if(gamepad1.dpad_down || gamepad2.dpad_down)
             {
                 h.motorFrontLeft.setPower(-.2);
                 h.motorFrontRight.setPower(.2);
@@ -104,7 +99,7 @@ public class TeleOp2022 extends LinearOpMode
 
             if(pressedCarousel & !pressedLastIterationCarousel)
             {
-                if(h.motorCarousel.getPower() == 0 && gamepad1.b)
+                if(h.motorCarousel.getPower() == 0 && gamepad2.b)
                 {
                     h.motorCarousel.setPower(.3);
                 }

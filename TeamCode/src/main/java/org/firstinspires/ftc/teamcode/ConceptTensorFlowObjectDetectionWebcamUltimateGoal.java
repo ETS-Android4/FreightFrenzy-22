@@ -58,6 +58,8 @@ public class ConceptTensorFlowObjectDetectionWebcamUltimateGoal extends LinearOp
     private static final String TFOD_MODEL_ASSET = "UltimateGoal.tflite";
     private static final String LABEL_FIRST_ELEMENT = "Quad";
     private static final String LABEL_SECOND_ELEMENT = "Single";
+    float ShippingElementX = 0;
+    int positionFromLeft = 0;
 
     /*
      * IMPORTANT: You need to obtain your own license key to use Vuforia. The string below with which
@@ -126,7 +128,7 @@ public class ConceptTensorFlowObjectDetectionWebcamUltimateGoal extends LinearOp
                         if (updatedRecognitions.size() == 0 ) {
                             // empty list.  no objects recognized.
                             telemetry.addData("TFOD", "No items detected.");
-                            telemetry.addData("Target Zone", "A");
+                            telemetry.addData("Position: ", "1");
                         } else {
                             // list is not empty.
                             // step through the list of recognitions and display boundary info.
@@ -146,6 +148,29 @@ public class ConceptTensorFlowObjectDetectionWebcamUltimateGoal extends LinearOp
                                 } else {
                                     telemetry.addData("Target Zone", "UNKNOWN");
                                 }
+
+                                /*if(recognition.getLabel().equals("Quad"))
+                                {
+                                    ShippingElementX = recognition.getLeft();
+                                }
+                                if (ShippingElementX < 200) {
+                                    telemetry.addData("Shipping Element:", "Middle");
+                                    telemetry.update();
+
+                                    positionFromLeft = 2;
+                                } else if (/*ShippingElementX < 400 && ShippingElementX > 200) {
+                                    telemetry.addData("Shipping Element", "Right");
+                                    telemetry.update();
+
+                                    positionFromLeft = 3;
+                                } else {
+                                    telemetry.addData("Shipping Element:", "Left");
+                                    telemetry.update();
+
+                                    positionFromLeft = 1;
+                                }*/
+
+
                             }
                         }
 

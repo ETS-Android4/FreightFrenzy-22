@@ -80,7 +80,7 @@ public class AutonomousFreightFrenzy_RedCarousel extends LinearOpMode {
             h.sleep(1350);
             h.setDrivePower(0);
 
-            /** SPIN CAROUSEL **/
+            /** SPIN CAROUSEL + **/
             h.motorCarousel.setPower(.3);
             h.sleep(3000);
 

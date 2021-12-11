@@ -128,20 +128,20 @@ public class Hardware extends LinearOpMode
         //motorLeftLaunch.setDirection(DcMotorSimple.Direction.REVERSE);
         //motorArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         //motorArm.setTargetPosition(0);
-        motorArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        motorArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         //motorArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorArm.setDirection(DcMotorSimple.Direction.FORWARD);
-        motorArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        motorArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         //motorWinch.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         //motorWinch.setTargetPosition(0);
-        motorWinch.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        motorWinch.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorWinch.setDirection(DcMotorSimple.Direction.FORWARD);
         motorWinch.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 
-        motorSwivel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorSwivel.setDirection(DcMotorSimple.Direction.FORWARD);
+        //motorSwivel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //motorSwivel.setDirection(DcMotorSimple.Direction.FORWARD);
         /*motorSwivel.setTargetPosition(0);
         motorSwivel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motorSwivel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -160,25 +160,30 @@ public class Hardware extends LinearOpMode
        // motorArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         //motorWinch.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-
-        motorFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorFrontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        motorFrontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        motorBackRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        motorBackLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        /*motorFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorBackRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorFrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorBackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        motorFrontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        motorFrontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        motorBackRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        motorBackLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);*/
 
         motorFrontRight.setDirection(DcMotorSimple.Direction.FORWARD);
         motorBackRight.setDirection(DcMotorSimple.Direction.FORWARD);
         motorFrontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
         motorBackLeft.setDirection(DcMotorSimple.Direction.FORWARD);
 
-
-        telemetry.addData("past set direction","");
-        telemetry.update();
 
         motorFrontRight.setPower(0);
         motorBackRight.setPower(0);
@@ -333,7 +338,7 @@ public class Hardware extends LinearOpMode
         if(forward)
         {
 
-            if(motorFrontRight.getCurrentPosition() < distanceEncodeVal - 20 && opModeIsActive())
+            if(motorFrontLeft.getCurrentPosition() < distanceEncodeVal - 20 )
             {
                 sleep(100);
             }
@@ -342,7 +347,7 @@ public class Hardware extends LinearOpMode
         else
         {
 
-            if(motorFrontRight.getCurrentPosition() > -distanceEncodeVal + 20 && opModeIsActive())
+            if(motorFrontLeft.getCurrentPosition() > -distanceEncodeVal + 20 )
             {
                 sleep(100);
             }
@@ -515,7 +520,7 @@ public class Hardware extends LinearOpMode
         if(left)
         {
 
-            while (motorFrontRight.getCurrentPosition() < -distanceEncodeVal + 20 && opModeIsActive())
+            while (motorFrontRight.getCurrentPosition() < distanceEncodeVal + 20)
             {
 
             }
@@ -523,7 +528,7 @@ public class Hardware extends LinearOpMode
         else
         {
 
-            while (motorFrontRight.getCurrentPosition() > distanceEncodeVal - 20 && opModeIsActive())
+            while (motorFrontRight.getCurrentPosition() > -distanceEncodeVal - 20)
             {
 
             }
