@@ -52,30 +52,30 @@ public class TeleOp2022 extends LinearOpMode
             if(gamepad1.dpad_left || gamepad2.dpad_left)
             {
                 h.motorFrontLeft.setPower(-.2);
-                h.motorFrontRight.setPower(-.2);
+                h.motorFrontRight.setPower(.2);
                 h.motorBackLeft.setPower(-.2);
-                h.motorBackRight.setPower(-.2);
+                h.motorBackRight.setPower(.2);
             }
             else if (gamepad1.dpad_right || gamepad2.dpad_right)
             {
                 h.motorFrontLeft.setPower(.2);
-                h.motorFrontRight.setPower(.2);
-                h.motorBackLeft.setPower(.2);
-                h.motorBackRight.setPower(.2);
-            }
-            if(gamepad1.dpad_up || gamepad2.dpad_up)
-            {
-                h.motorFrontLeft.setPower(.2);
                 h.motorFrontRight.setPower(-.2);
                 h.motorBackLeft.setPower(.2);
                 h.motorBackRight.setPower(-.2);
             }
+            if(gamepad1.dpad_up || gamepad2.dpad_up)
+            {
+                h.motorFrontLeft.setPower(.2);
+                h.motorFrontRight.setPower(.2);
+                h.motorBackLeft.setPower(.2);
+                h.motorBackRight.setPower(.2);
+            }
             else if(gamepad1.dpad_down || gamepad2.dpad_down)
             {
                 h.motorFrontLeft.setPower(-.2);
-                h.motorFrontRight.setPower(.2);
+                h.motorFrontRight.setPower(-.2);
                 h.motorBackLeft.setPower(-.2);
-                h.motorBackRight.setPower(.2);
+                h.motorBackRight.setPower(-.2);
             }
 
 

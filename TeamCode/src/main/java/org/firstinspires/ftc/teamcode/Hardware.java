@@ -179,8 +179,8 @@ public class Hardware extends LinearOpMode
         motorBackRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         motorBackLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);*/
 
-        motorFrontRight.setDirection(DcMotorSimple.Direction.FORWARD);
-        motorBackRight.setDirection(DcMotorSimple.Direction.FORWARD);
+        motorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        motorBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
         motorFrontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
         motorBackLeft.setDirection(DcMotorSimple.Direction.FORWARD);
 
@@ -247,7 +247,7 @@ public class Hardware extends LinearOpMode
         if(forward)
         {
 
-            while (motorFrontLeft.getCurrentPosition() < distanceEncodeVal - 20)
+            while (motorFrontLeft.getCurrentPosition() < distanceEncodeVal - 20 && !isStopRequested())
             {
 
             }
@@ -255,7 +255,7 @@ public class Hardware extends LinearOpMode
         else
         {
 
-            while (motorFrontLeft.getCurrentPosition() > -distanceEncodeVal + 20)
+            while (motorFrontLeft.getCurrentPosition() > -distanceEncodeVal + 20 && !isStopRequested())
             {
 
             }
@@ -431,7 +431,7 @@ public class Hardware extends LinearOpMode
         if(forward)
         {
 
-            if(motorFrontLeft.getCurrentPosition() < distanceEncodeVal - 20)
+            if(motorFrontLeft.getCurrentPosition() < distanceEncodeVal - 20 )
             {
                 sleep(100);
             }
@@ -488,16 +488,16 @@ public class Hardware extends LinearOpMode
         if(left)
         {
             motorFrontLeft.setTargetPosition(-distanceEncodeVal);
-            motorFrontRight.setTargetPosition(-distanceEncodeVal);
+            motorFrontRight.setTargetPosition(distanceEncodeVal);
             motorBackLeft.setTargetPosition(distanceEncodeVal);
-            motorBackRight.setTargetPosition(distanceEncodeVal);
+            motorBackRight.setTargetPosition(-distanceEncodeVal);
         }
         else
         {
             motorFrontLeft.setTargetPosition(distanceEncodeVal);
-            motorFrontRight.setTargetPosition(distanceEncodeVal);
+            motorFrontRight.setTargetPosition(-distanceEncodeVal);
             motorBackLeft.setTargetPosition(-distanceEncodeVal);
-            motorBackRight.setTargetPosition(-distanceEncodeVal);
+            motorBackRight.setTargetPosition(distanceEncodeVal);
         }
 
         motorFrontLeft.setPower(power);
@@ -520,7 +520,7 @@ public class Hardware extends LinearOpMode
         if(left)
         {
 
-            while (motorFrontRight.getCurrentPosition() < distanceEncodeVal + 20)
+            while (motorFrontLeft.getCurrentPosition() < -distanceEncodeVal + 20 && !isStopRequested())
             {
 
             }
@@ -528,7 +528,7 @@ public class Hardware extends LinearOpMode
         else
         {
 
-            while (motorFrontRight.getCurrentPosition() > -distanceEncodeVal - 20)
+            while (motorFrontLeft.getCurrentPosition() > distanceEncodeVal - 20 && !isStopRequested())
             {
 
             }
@@ -558,15 +558,15 @@ public class Hardware extends LinearOpMode
      {
          /**                   | Forward and|
           *                    | Backwards  | Strafing | Turning |  */
-        motorFrontRight.setPower(joystickY + joystickX - rotation);
-        motorBackRight.setPower(joystickY - joystickX - rotation);
-        motorFrontLeft.setPower(-joystickY + joystickX - rotation);
-        motorBackLeft.setPower(-joystickY - joystickX - rotation);
+        motorFrontRight.setPower(-joystickY - joystickX - rotation);
+        motorBackRight.setPower(-joystickY + joystickX - rotation);
+        motorFrontLeft.setPower(-joystickY + joystickX + rotation);
+        motorBackLeft.setPower(-joystickY - joystickX + rotation);
 
-         //motorFrontRight.setPower(joystickY - joystickX + rotation);
-         //motorBackRight.setPower(-joystickY - joystickX + rotation);
-         //motorFrontLeft.setPower(-joystickY + joystickX + rotation);
-         //motorBackLeft.setPower(joystickY + joystickX - rotation);
+         /*motorFrontRight.setPower(joystickY + joystickX - rotation);
+         motorBackRight.setPower(joystickY - joystickX - rotation);
+         motorFrontLeft.setPower(-joystickY + joystickX - rotation);
+         motorBackLeft.setPower(-joystickY - joystickX - rotation);*/
     }
 
     public double getIntegratedHeading() {
@@ -597,12 +597,11 @@ public class Hardware extends LinearOpMode
         motorFrontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motorBackRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-    //Right is up to +180
-    //Left is up to -180
 
-    //Right is all positive
-    //Left is all negative
-    //Straight is left positive. Right negative.
+
+//Right is all positive
+//Left is all negative
+//Straight is left positive. Right negative.
         if(targetDegrees == 0)
         {
             //Tell robot to correct to straight forward
@@ -613,8 +612,8 @@ public class Hardware extends LinearOpMode
 
                 motorFrontLeft.setPower(-power);
                 motorBackLeft.setPower(-power);
-                motorFrontRight.setPower(-power);
-                motorBackRight.setPower(-power);
+                motorFrontRight.setPower(power);
+                motorBackRight.setPower(power);
 
                 while(MRgyro.getIntegratedZValue() > targetDegrees)
                 {
@@ -790,10 +789,10 @@ public class Hardware extends LinearOpMode
 
                 motorFrontLeft.setPower(-power);
                 motorBackLeft.setPower(-power);
-                motorFrontRight.setPower(-power);
-                motorBackRight.setPower(-power);
+                motorFrontRight.setPower(power);
+                motorBackRight.setPower(power);
 
-                while(getIntegratedHeading() > targetDegrees)
+                while(getIntegratedHeading() > targetDegrees && !isStopRequested())
                 {
 
                     telemetry.addData("Target Value: ", targetDegrees);
@@ -811,7 +810,7 @@ public class Hardware extends LinearOpMode
                 motorFrontRight.setPower(-correctionPower);
                 motorBackRight.setPower(-correctionPower);
 
-                while(getIntegratedHeading() < targetDegrees)
+                while(getIntegratedHeading() < targetDegrees && !isStopRequested())
                 {
                     telemetry.addData("Target Value: ", targetDegrees);
                     telemetry.addData("Current Value: ", getIntegratedHeading());
@@ -831,7 +830,7 @@ public class Hardware extends LinearOpMode
                 motorFrontRight.setPower(-power);
                 motorBackRight.setPower(-power);
 
-                while(getIntegratedHeading() < targetDegrees)
+                while(getIntegratedHeading() < targetDegrees && !isStopRequested())
                 {
                     telemetry.addData("Target Value: ", targetDegrees);
                     telemetry.addData("Current Value: ", getIntegratedHeading());
@@ -847,7 +846,7 @@ public class Hardware extends LinearOpMode
                 motorFrontRight.setPower(correctionPower);
                 motorBackRight.setPower(correctionPower);
 
-                while(getIntegratedHeading() > targetDegrees)
+                while(getIntegratedHeading() > targetDegrees && !isStopRequested())
                 {
                     telemetry.addData("Target Value: ", targetDegrees);
                     telemetry.addData("Current Value: ", getIntegratedHeading());
@@ -869,10 +868,10 @@ public class Hardware extends LinearOpMode
             //TURNING LEFT
             motorFrontLeft.setPower(-power);
             motorBackLeft.setPower(-power);
-            motorFrontRight.setPower(-power);
-            motorBackRight.setPower(-power);
+            motorFrontRight.setPower(power);
+            motorBackRight.setPower(power);
 
-            while(getIntegratedHeading() < targetDegrees)
+            while(getIntegratedHeading() < targetDegrees && !isStopRequested())
             {
                 telemetry.addData("Target Value: ", targetDegrees);
                 telemetry.addData("Current Value: ", getIntegratedHeading());
@@ -886,10 +885,10 @@ public class Hardware extends LinearOpMode
 
             motorFrontLeft.setPower(correctionPower);
             motorBackLeft.setPower(correctionPower);
-            motorFrontRight.setPower(correctionPower);
-            motorBackRight.setPower(correctionPower);
+            motorFrontRight.setPower(-correctionPower);
+            motorBackRight.setPower(-correctionPower);
 
-            while(getIntegratedHeading() > targetDegrees)
+            while(getIntegratedHeading() > targetDegrees && !isStopRequested())
             {
                 telemetry.addData("Target Value: ", targetDegrees);
                 telemetry.addData("Current Value: ", getIntegratedHeading());
@@ -906,10 +905,10 @@ public class Hardware extends LinearOpMode
             //TURNING RIGHT
             motorFrontLeft.setPower(power);
             motorBackLeft.setPower(power);
-            motorFrontRight.setPower(power);
-            motorBackRight.setPower(power);
+            motorFrontRight.setPower(-power);
+            motorBackRight.setPower(-power);
 
-            while(getIntegratedHeading() > targetDegrees)
+            while(getIntegratedHeading() > targetDegrees && !isStopRequested())
             {
                 telemetry.addData("Target Value: ", targetDegrees);
                 telemetry.addData("Current Value: ", getIntegratedHeading());
@@ -922,10 +921,10 @@ public class Hardware extends LinearOpMode
             }
             motorFrontLeft.setPower(-correctionPower);
             motorBackLeft.setPower(-correctionPower);
-            motorFrontRight.setPower(-correctionPower);
-            motorBackRight.setPower(-correctionPower);
+            motorFrontRight.setPower(correctionPower);
+            motorBackRight.setPower(correctionPower);
 
-            while(getIntegratedHeading() < targetDegrees)
+            while(getIntegratedHeading() < targetDegrees && !isStopRequested())
             {
                 telemetry.addData("Target Value: ", targetDegrees);
                 telemetry.addData("Current Value: ", getIntegratedHeading());

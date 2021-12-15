@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -34,6 +35,19 @@ public class AutonomousFreightFrenzy_RedCarouselEncoder extends LinearOpMode {
             telemetry.addData("Init Error:", "Something failed to initialize");
             e.printStackTrace();
         }
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+
+        parameters.mode                = BNO055IMU.SensorMode.IMU;
+        parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.loggingEnabled      = false;
+
+        // Retrieve and initialize the IMU. We expect the IMU to be attached to an I2C port
+        // on a Core Device Interface Module, configured to be a sensor of type "AdaFruit IMU",
+        // and named "imu".
+        h.imu = hardwareMap.get(BNO055IMU.class, "imu");
+        h.imu.initialize(parameters);
+
         h.servoIntake.setPosition(1);
 
         /*h.motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -79,6 +93,10 @@ public class AutonomousFreightFrenzy_RedCarouselEncoder extends LinearOpMode {
             telemetry.addData("motorBackRight encoder value: ",h.motorBackRight.getCurrentPosition());*/
             telemetry.update();
 
+            h.drive(true,10,.3);
+            h.turnIMU(90,.3,.1);
+            h.strafe(true,10,.3);
+            /*
             h.motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             h.motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             h.motorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -136,7 +154,8 @@ public class AutonomousFreightFrenzy_RedCarouselEncoder extends LinearOpMode {
             h.motorBackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             h.motorBackRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             h.setDrivePower((float) 0.2);
-
+*/
+            ///////////////////////////////////////////////////////////
 
             /** DRIVE FORWARD TO PREPARE FOR CAROUSEL **/
            /* h.TestDrive(true,20,.5);
