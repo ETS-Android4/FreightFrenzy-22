@@ -55,9 +55,10 @@ import java.util.List;
 @Autonomous(name = "Concept: TensorFlow Object Detection Webcam", group = "Concept")
 
 public class ConceptTensorFlowObjectDetectionWebcamUltimateGoal extends LinearOpMode {
-    private static final String TFOD_MODEL_ASSET = "UltimateGoal.tflite";
-    private static final String LABEL_FIRST_ELEMENT = "Quad";
-    private static final String LABEL_SECOND_ELEMENT = "Single";
+    private static final String TFOD_MODEL_ASSET = "/sdcard/FIRST/tflitemodels/TeamShippingElement.tflite";
+    private static final String LABEL_FIRST_ELEMENT = "Pos 3";
+    private static final String LABEL_SECOND_ELEMENT = "Pos 2";
+    private static final String LABEL_THIRD_ELEMENT = "Pos 1";
     float ShippingElementX = 0;
     int positionFromLeft = 0;
 
@@ -109,7 +110,7 @@ public class ConceptTensorFlowObjectDetectionWebcamUltimateGoal extends LinearOp
             // to artificially zoom in to the center of image.  For best results, the "aspectRatio" argument
             // should be set to the value of the images used to create the TensorFlow Object Detection model
             // (typically 16/9).
-            tfod.setZoom(2.5, 16.0/9.0);
+            tfod.setZoom(1, 16.0/9.0);
         }
 
         /** Wait for the game to begin */
@@ -212,6 +213,6 @@ public class ConceptTensorFlowObjectDetectionWebcamUltimateGoal extends LinearOp
         TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
        tfodParameters.minResultConfidence = 0.8f;
        tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
-       tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_FIRST_ELEMENT, LABEL_SECOND_ELEMENT);
+       tfod.loadModelFromFile(TFOD_MODEL_ASSET, LABEL_FIRST_ELEMENT, LABEL_SECOND_ELEMENT, LABEL_THIRD_ELEMENT);
     }
 }
