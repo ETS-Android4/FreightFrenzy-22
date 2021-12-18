@@ -3,43 +3,50 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.checkerframework.checker.units.qual.A;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
+import org.openftc.easyopencv.OpenCvWebcam;
 
-@Autonomous (name= "FreightDetector")
+@Autonomous(name="Freight Detector", group="Auto")
 public class FreightOpenCV extends LinearOpMode {
-    private OpenCvInternalCamera phoneCam;
+    Hardware h = new Hardware();
+    OpenCvCamera webCam;
+
 
     @Override
-    public void runOpMode(){
-
+    public void runOpMode() throws InterruptedException {
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        WebcamName webcamName = hardwareMap.get(WebcamName.class, "Webcam 1");
-        OpenCvCamera camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName);
-
-        camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
+        webCam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+        FreightDetector detector = new FreightDetector(telemetry);
+        webCam.setPipeline(detector);
+        webCam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
         {
             @Override
             public void onOpened()
             {
-                // Usually this is where you'll want to start streaming from the camera (see section 4)
-                camera.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
+                webCam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
             }
             @Override
             public void onError(int errorCode)
             {
-                /*
-                 * This will be called if the camera could not be opened
-                 */
+                telemetry.addData("Error", "Camera not able to open");
             }
         });
 
+        waitForStart();
+        switch (detector.getLocation()) {
+            case LEFT:
 
-
-
+                break;
+            case MIDDLE:
+                // ...
+                break;
+            case RIGHT:
+                // ...
+        }
+        webCam.stopStreaming();
     }
 }
