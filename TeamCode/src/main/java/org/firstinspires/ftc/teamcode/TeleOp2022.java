@@ -131,7 +131,7 @@ public class TeleOp2022 extends LinearOpMode
             }
             if (gamepad1.right_bumper /*&& h.motorArm.getPosition() > low limit*/)
             {
-                h.motorArm.setPower(-1);
+                h.motorArm.setPower(-.3);
             }
             if(!gamepad1.right_bumper && gamepad1.right_trigger == 0)
             {

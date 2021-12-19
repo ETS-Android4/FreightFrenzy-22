@@ -127,6 +127,7 @@ public class Hardware extends LinearOpMode
         //motorWorm.setDirection(DcMotorSimple.Direction.FORWARD);
         //motorLeftLaunch.setDirection(DcMotorSimple.Direction.REVERSE);
         //motorArm.setTargetPosition(0);
+        motorArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         //motorArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorArm.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -155,8 +156,8 @@ public class Hardware extends LinearOpMode
         //motorWinch.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         //motorArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        // motorSwivel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-       // motorArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //motorSwivel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //motorArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         //motorWinch.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         motorFrontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -246,7 +247,7 @@ public class Hardware extends LinearOpMode
         if(forward)
         {
 
-            while (motorFrontLeft.getCurrentPosition() < distanceEncodeVal - 20 && !isStopRequested())
+            while (motorFrontRight.getCurrentPosition() < distanceEncodeVal - 20 && !isStopRequested())
             {
 
             }
@@ -254,7 +255,7 @@ public class Hardware extends LinearOpMode
         else
         {
 
-            while (motorFrontLeft.getCurrentPosition() > -distanceEncodeVal + 20 && !isStopRequested())
+            while (motorFrontRight.getCurrentPosition() > -distanceEncodeVal + 20 && !isStopRequested())
             {
 
             }
@@ -283,6 +284,99 @@ public class Hardware extends LinearOpMode
 
 
     }
+    public void drivePureEncoder(boolean forward, int distanceEncodeVal, double power)
+    {
+
+
+
+        motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        driveTime = distanceEncodeVal;
+
+
+
+
+        if(forward)
+        {
+            motorFrontLeft.setTargetPosition(distanceEncodeVal);
+            motorFrontRight.setTargetPosition(distanceEncodeVal);
+            motorBackLeft.setTargetPosition(distanceEncodeVal);
+            motorBackRight.setTargetPosition(distanceEncodeVal);
+        }
+        else
+        {
+            motorFrontLeft.setTargetPosition(-distanceEncodeVal);
+            motorFrontRight.setTargetPosition(-distanceEncodeVal);
+            motorBackLeft.setTargetPosition(-distanceEncodeVal);
+            motorBackRight.setTargetPosition(-distanceEncodeVal);
+        }
+
+        motorFrontLeft.setPower(power);
+        motorFrontRight.setPower(power);
+        motorBackLeft.setPower(power);
+        motorBackRight.setPower(power);
+
+        motorFrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motorFrontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motorBackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motorBackRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        /*
+        while((motorFrontLeft.getCurrentPosition() > distanceEncodeVal) && opModeIsActive())
+        {
+            telemetry.addData("Running", "...");
+            telemetry.update();
+        }
+        */
+
+        //telemetry.addData("Running", "...");
+        //telemetry.update();
+
+        if(forward)
+        {
+
+            while (motorFrontRight.getCurrentPosition() < distanceEncodeVal - 20 && !isStopRequested())
+            {
+
+            }
+        }
+        else
+        {
+
+            while (motorFrontRight.getCurrentPosition() > -distanceEncodeVal + 20 && !isStopRequested())
+            {
+
+            }
+
+        }
+
+        //telemetry.addData("Finished", ".");
+        //telemetry.update();
+
+
+
+        /*motorFrontLeft.setTargetPosition(0);
+        motorFrontRight.setTargetPosition(0);
+        motorBackLeft.setTargetPosition(0);
+        motorBackRight.setTargetPosition(0);*/
+
+        motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        motorFrontLeft.setPower(0);
+        motorFrontRight.setPower(0);
+        motorBackLeft.setPower(0);
+        motorBackRight.setPower(0);
+
+
+    }
+
+
 
     public void strafe(boolean left, int distanceInches,double power)
     {
@@ -333,7 +427,7 @@ public class Hardware extends LinearOpMode
         if(left)
         {
 
-            while (motorFrontLeft.getCurrentPosition() < -distanceEncodeVal + 20 && !isStopRequested())
+            while (motorFrontRight.getCurrentPosition() < -distanceEncodeVal + 20 && !isStopRequested())
             {
 
             }
@@ -341,7 +435,7 @@ public class Hardware extends LinearOpMode
         else
         {
 
-            while (motorFrontLeft.getCurrentPosition() > distanceEncodeVal - 20 && !isStopRequested())
+            while (motorFrontRight.getCurrentPosition() > distanceEncodeVal - 20 && !isStopRequested())
             {
 
             }

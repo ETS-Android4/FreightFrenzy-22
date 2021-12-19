@@ -2,15 +2,13 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name = "Red Carousel Autonomous Encoder", group = "Linear OpMode")
-public class AutonomousFreightFrenzy_RedCarouselEncoder extends LinearOpMode {
+@Autonomous(name = "Red Freight Autonomous Encoder", group = "Linear OpMode")
+public class AutonomousFreightFrenzy_RedFreightEncoder extends LinearOpMode {
 
     OpMode opmode;
 
@@ -119,68 +117,12 @@ public class AutonomousFreightFrenzy_RedCarouselEncoder extends LinearOpMode {
             h.motorCarousel.setPower(0);
 
             h.drive(true,5,.3);*/
+            h.drive(true,5,.5);
+            h.turnIMU(90,.3,.1);
+            h.drive(true,20,1);
 
 
 
-            h.motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            h.motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            h.motorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            h.motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-            h.motorFrontLeft.setTargetPosition(440);
-            h.motorFrontRight.setTargetPosition(440);
-            h.motorBackLeft.setTargetPosition(440);
-            h.motorBackRight.setTargetPosition(440);
-
-            h.motorFrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            h.motorFrontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            h.motorBackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            h.motorBackRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-            h.setDrivePower((float) 0.2);
-
-
-            h.sleep(2000);
-
-
-            h.motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            h.motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            h.motorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            h.motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-            h.motorFrontLeft.setTargetPosition(-2100);
-            h.motorFrontRight.setTargetPosition(2100);
-            h.motorBackLeft.setTargetPosition(2100);
-            h.motorBackRight.setTargetPosition(-2100);
-
-            h.motorFrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            h.motorFrontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            h.motorBackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            h.motorBackRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            h.setDrivePower((float) 0.2);
-
-            h.sleep(3000);
-
-            h.motorCarousel.setPower(.3);
-            h.sleep(5000);
-
-            h.motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            h.motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            h.motorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            h.motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-            h.motorCarousel.setPower(0);
-
-            h.motorFrontLeft.setTargetPosition(1270);
-            h.motorFrontRight.setTargetPosition(1270);
-            h.motorBackLeft.setTargetPosition(1270);
-            h.motorBackRight.setTargetPosition(1270);
-
-            h.motorFrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            h.motorFrontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            h.motorBackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            h.motorBackRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            h.setDrivePower((float) 0.2);
 
             /** PARK HAS CONCLUDED **/
 

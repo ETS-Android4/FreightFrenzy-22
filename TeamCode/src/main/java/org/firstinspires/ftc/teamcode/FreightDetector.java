@@ -57,13 +57,13 @@ public class FreightDetector extends OpenCvPipeline {
 
         if (!stoneMiddle && !stoneRight) {
             location = Location.LEFT;
-            telemetry.addData("Skystone Location", "left");
+            telemetry.addData("ShippingElement Location", "left");
         } else if (stoneMiddle) {
             location = Location.RIGHT;
-            telemetry.addData("Skystone Location", "middle");
+            telemetry.addData("ShippingElement Location", "middle");
         } else {
             location = Location.MIDDLE;
-            telemetry.addData("Skystone Location", "right");
+            telemetry.addData("ShippingElement Location", "right");
         }
         telemetry.update();
 
