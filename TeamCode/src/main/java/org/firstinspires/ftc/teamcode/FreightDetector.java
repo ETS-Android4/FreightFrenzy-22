@@ -25,7 +25,7 @@ public class FreightDetector extends OpenCvPipeline {
     static final Rect RIGHT_ROI = new Rect(
             new Point(140, 80),
             new Point(210, 130));
-    static double PERCENT_COLOR_THRESHOLD = 0.4;
+    static double PERCENT_COLOR_THRESHOLD = 0.1;
 
     public FreightDetector(Telemetry t) { telemetry = t; }
 

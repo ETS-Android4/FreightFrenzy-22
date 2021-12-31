@@ -113,7 +113,7 @@ public class Hardware extends LinearOpMode
         /*
         servoSpin = aMap.crservo.get("servoSpin");
         servoSpin2 = aMap.crservo.get("servoSpin2");
-
+*/
         MRgyro = aMap.get(ModernRoboticsI2cGyro.class, "MRgyro");
         //MRRange = aMap.get(ModernRoboticsI2cRangeSensor.class, "MRRange");*/
 
@@ -389,6 +389,91 @@ public class Hardware extends LinearOpMode
 
         distanceEncodeVal = -(int) Math.round((distanceInches/(4* Math.PI))*1120);
         driveTime = (distanceInches/10)*1000;
+        long beginning = System.currentTimeMillis();
+        long end =beginning + driveTime;
+
+
+
+
+        if(left)
+        {
+            motorFrontLeft.setTargetPosition(-distanceEncodeVal);
+            motorFrontRight.setTargetPosition(distanceEncodeVal);
+            motorBackLeft.setTargetPosition(distanceEncodeVal);
+            motorBackRight.setTargetPosition(-distanceEncodeVal);
+        }
+        else
+        {
+            motorFrontLeft.setTargetPosition(distanceEncodeVal);
+            motorFrontRight.setTargetPosition(-distanceEncodeVal);
+            motorBackLeft.setTargetPosition(-distanceEncodeVal);
+            motorBackRight.setTargetPosition(distanceEncodeVal);
+        }
+
+        motorFrontLeft.setPower(power);
+        motorFrontRight.setPower(power);
+        motorBackLeft.setPower(power);
+        motorBackRight.setPower(power);
+
+        motorFrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motorFrontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motorBackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motorBackRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        /*
+        while((motorFrontLeft.getCurrentPosition() > distanceEncodeVal) && opModeIsActive())
+        {
+            telemetry.addData("Running", "...");
+            telemetry.update();
+        }
+        */
+        if(left)
+        {
+
+            while (motorFrontRight.getCurrentPosition() < -distanceEncodeVal + 20 && !isStopRequested() && end > System.currentTimeMillis())
+            {
+
+            }
+        }
+        else
+        {
+
+            while (motorFrontRight.getCurrentPosition() > distanceEncodeVal - 20 && !isStopRequested() && end > System.currentTimeMillis())
+            {
+
+            }
+
+        }
+
+
+
+        /*motorFrontLeft.setTargetPosition(0);
+        motorFrontRight.setTargetPosition(0);
+        motorBackLeft.setTargetPosition(0);
+        motorBackRight.setTargetPosition(0);*/
+
+        motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        motorFrontLeft.setPower(0);
+        motorFrontRight.setPower(0);
+        motorBackLeft.setPower(0);
+        motorBackRight.setPower(0);
+
+    }
+    public void strafePureEncoder(boolean left, int distanceEncodeVal,double power, int driveTimeInSeconds)
+    {
+        motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        driveTime = driveTimeInSeconds * 1000;
+        long beginning = System.currentTimeMillis();
+        long end =beginning + driveTime;
+
 
 
 
@@ -489,11 +574,7 @@ public class Hardware extends LinearOpMode
         integratedHeading += deltaHeading;
         previousHeading = currentHeading;
 
-        if (integratedHeading < 0)
-        {
-            return integratedHeading + 360;
-        }
-        else return integratedHeading;
+        return integratedHeading;
 
     }
 

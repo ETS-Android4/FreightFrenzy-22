@@ -5,17 +5,22 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.checkerframework.common.subtyping.qual.Bottom;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-@Autonomous(name="Freight Detector", group="Auto")
+@Autonomous(name="Carousel Detector", group="Auto")
 public class FreightOpenCVRedCarousel extends LinearOpMode {
     Hardware h = new Hardware();
     OpenCvCamera webCam;
-    int ShippingElementPosFromLeft;
-
+    public enum Position {
+        TOP,
+        MIDDLE,
+        BOTTOM
+    }
+    Position position;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -74,14 +79,14 @@ public class FreightOpenCVRedCarousel extends LinearOpMode {
 
         waitForStart();
         switch (detector.getLocation()) {
-            case LEFT:
-                //
+            case LEFT: //bottom reversed if blue
+                position = Position.BOTTOM;
                 break;
-            case MIDDLE:
-                //
+            case MIDDLE://middle reversed if blue
+                position = Position.MIDDLE;
                 break;
-            case RIGHT:
-                //
+            case RIGHT://top reversed if blue
+                position = Position.TOP;
         }
         webCam.stopStreaming();
         /*h.motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

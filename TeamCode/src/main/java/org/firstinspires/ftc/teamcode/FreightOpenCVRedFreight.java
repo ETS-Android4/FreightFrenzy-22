@@ -3,36 +3,46 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name = "Red Freight Autonomous Encoder", group = "Linear OpMode")
-public class AutonomousFreightFrenzy_RedFreightEncoder extends LinearOpMode {
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
 
-    OpMode opmode;
-
-    private String Date;
-    private ElapsedTime runtime = new ElapsedTime();
-
-    public int currentDegrees;
-
-    long start = System.currentTimeMillis();
-
-    int driveTime;
+@Autonomous(name="Freight Detector", group="Auto")
+public class FreightOpenCVRedFreight extends LinearOpMode {
+    Hardware h = new Hardware();
+    OpenCvCamera webCam;
+    int ShippingElementPosFromLeft;
 
 
     @Override
-    public void runOpMode()
-    {
-        Hardware h = new Hardware();
-
+    public void runOpMode() throws InterruptedException {
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        webCam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+        FreightDetector detector = new FreightDetector(telemetry);
+        webCam.setPipeline(detector);
+        webCam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
+        {
+            @Override
+            public void onOpened()
+            {
+                webCam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
+            }
+            @Override
+            public void onError(int errorCode)
+            {
+                telemetry.addData("Error", "Camera not able to open");
+            }
+        });
         try {
             h.init(hardwareMap, telemetry);
         } catch (Exception e) {
             telemetry.addData("Init Error:", "Something failed to initialize");
             e.printStackTrace();
         }
+
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
 
         parameters.mode                = BNO055IMU.SensorMode.IMU;
@@ -45,7 +55,6 @@ public class AutonomousFreightFrenzy_RedFreightEncoder extends LinearOpMode {
         // and named "imu".
         h.imu = hardwareMap.get(BNO055IMU.class, "imu");
         h.imu.initialize(parameters);
-
         telemetry.addData("Mode", "calibrating...");
         telemetry.update();
 
@@ -58,39 +67,27 @@ public class AutonomousFreightFrenzy_RedFreightEncoder extends LinearOpMode {
 
         telemetry.addData("Mode", "waiting for start");
         telemetry.addData("imu calib status", h.imu.getCalibrationStatus().toString());
+        telemetry.addData("iteration:", 2);
         telemetry.update();
+
         h.servoIntake.setPosition(1);
 
-        /*h.motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        h.motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        h.motorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        h.motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        h.motorFrontRight.setTargetPosition(0);
-        h.motorFrontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        h.motorBackRight.setTargetPosition(0);
-        h.motorBackRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        h.motorFrontLeft.setTargetPosition(0);
-        h.motorFrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        h.motorBackLeft.setTargetPosition(0);
-        h.motorBackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);*/
-        h.MRgyro.calibrate();
-        while(h.MRgyro.isCalibrating() && opModeIsActive())
-        {
-            telemetry.update();
-            telemetry.addData("MRgyro:", "calibrating");
-        }
-        telemetry.addData("Calibration", "complete");
-        telemetry.addData("Initialization ", "complete");
-        telemetry.addData("Heading: ", h.MRgyro.getIntegratedZValue());
-        telemetry.update();
-
-
-
-
         waitForStart();
+        switch (detector.getLocation()) {
+            case LEFT: //actually is on the right so top if red
+                h.strafePureEncoder(true,2100,.5,3);
 
-            /*h.motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                h.drivePureEncoder(true,800,.3);
+
+                break;
+            case MIDDLE://actually is left so bottomPos
+
+                break;
+            case RIGHT://actually is middle so middlePos reversed if blue
+                //
+        }
+        webCam.stopStreaming();
+        /*h.motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             h.motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             h.motorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             h.motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);*/
@@ -98,16 +95,16 @@ public class AutonomousFreightFrenzy_RedFreightEncoder extends LinearOpMode {
             h.motorArm.setPower(1);
             h.motorArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);*/
 
-            telemetry.addData("motorFrontLeft encoder value: ",h.motorFrontLeft.getCurrentPosition());
-            telemetry.addData("motorFrontRight encoder value: ",h.motorFrontRight.getCurrentPosition());
-            telemetry.addData("motorBackLeft encoder value: ",h.motorBackLeft.getCurrentPosition());
-            telemetry.addData("motorBackRight encoder value: ",h.motorBackRight.getCurrentPosition());
-            telemetry.update();
+        telemetry.addData("motorFrontLeft encoder value: ",h.motorFrontLeft.getCurrentPosition());
+        telemetry.addData("motorFrontRight encoder value: ",h.motorFrontRight.getCurrentPosition());
+        telemetry.addData("motorBackLeft encoder value: ",h.motorBackLeft.getCurrentPosition());
+        telemetry.addData("motorBackRight encoder value: ",h.motorBackRight.getCurrentPosition());
+        telemetry.update();
 
-            h.motorFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            h.motorBackRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            h.motorFrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            h.motorBackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        h.motorFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        h.motorBackRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        h.motorFrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        h.motorBackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             /*h.drive(true,5,.3);
 
             h.strafe(false,23,.3);
@@ -117,19 +114,16 @@ public class AutonomousFreightFrenzy_RedFreightEncoder extends LinearOpMode {
             h.motorCarousel.setPower(0);
 
             h.drive(true,5,.3);*/
-            h.drive(true,8,.5);
-            h.turnIMU(-90,.5,.3);
-            h.drive(true,32,.7);
+        /*h.drive(true,8,.5);
+        h.turnIMU(-90,.5,.3);
+        h.drive(true,32,.7);*/
+
+        /** PARK HAS CONCLUDED **/
 
 
+        ///////////////////////////////////////////////////////////
 
-
-            /** PARK HAS CONCLUDED **/
-
-
-            ///////////////////////////////////////////////////////////
-
-            /** DRIVE FORWARD TO PREPARE FOR CAROUSEL **/
+        /** DRIVE FORWARD TO PREPARE FOR CAROUSEL **/
            /* h.TestDrive(true,20,.5);
             h.sleep(270);
 
@@ -216,5 +210,6 @@ public class AutonomousFreightFrenzy_RedFreightEncoder extends LinearOpMode {
             telemetry.addData("motorBackRight encoder value: ",h.motorBackRight.getCurrentPosition());
             telemetry.update();
         }
+
     }
 }
