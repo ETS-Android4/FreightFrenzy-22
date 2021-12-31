@@ -133,7 +133,7 @@ public class Hardware extends LinearOpMode
         motorArm.setDirection(DcMotorSimple.Direction.FORWARD);
         motorArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        //motorWinch.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorWinch.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         //motorWinch.setTargetPosition(0);
         motorWinch.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorWinch.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -472,7 +472,7 @@ public class Hardware extends LinearOpMode
 
         driveTime = driveTimeInSeconds * 1000;
         long beginning = System.currentTimeMillis();
-        long end =beginning + driveTime;
+        long end = beginning + driveTime;
 
 
 
@@ -512,7 +512,7 @@ public class Hardware extends LinearOpMode
         if(left)
         {
 
-            while (motorFrontRight.getCurrentPosition() < -distanceEncodeVal + 20 && !isStopRequested())
+            while (motorFrontRight.getCurrentPosition() < -distanceEncodeVal + 20 && !isStopRequested() && System.currentTimeMillis() != end)
             {
 
             }

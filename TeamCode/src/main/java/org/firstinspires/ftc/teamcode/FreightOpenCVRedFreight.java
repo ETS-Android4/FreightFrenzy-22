@@ -67,17 +67,54 @@ public class FreightOpenCVRedFreight extends LinearOpMode {
 
         telemetry.addData("Mode", "waiting for start");
         telemetry.addData("imu calib status", h.imu.getCalibrationStatus().toString());
-        telemetry.addData("iteration:", 2);
+        telemetry.addData("iteration:", 3);
         telemetry.update();
 
         h.servoIntake.setPosition(1);
 
         waitForStart();
+        telemetry.addData("iteration:", 3);
+        telemetry.update();
         switch (detector.getLocation()) {
             case LEFT: //actually is on the right so top if red
-                h.strafePureEncoder(true,2100,.5,3);
+                /** GETTING READY TO DROP BLOCK **/
+                h.motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                h.motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                h.motorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                h.motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+                h.motorFrontLeft.setTargetPosition(-1550);
+                h.motorFrontRight.setTargetPosition(1550);
+                h.motorBackLeft.setTargetPosition(1550);
+                h.motorBackRight.setTargetPosition(-1550);
+
+                h.motorFrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                h.motorFrontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                h.motorBackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                h.motorBackRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                h.setDrivePower((float) 0.2);
+                h.sleep(5000);
 
                 h.drivePureEncoder(true,800,.3);
+                /** DROPPING BLOCK **/
+
+                h.motorWinch.setTargetPosition(400);
+                h.motorWinch.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                h.motorWinch.setPower(.5);
+
+                while (h.motorWinch.isBusy() && !isStopRequested())
+                {
+                    telemetry.addData("motorWinch Pos: ", h.motorWinch.getCurrentPosition());
+                    telemetry.update();
+                }
+
+                h.servoIntake.setPosition(0);
+
+                h.sleep(300);
+
+                h.motorWinch.setTargetPosition(0);
+                h.motorWinch.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                h.motorWinch.setPower(.5);
 
                 break;
             case MIDDLE://actually is left so bottomPos
@@ -87,6 +124,10 @@ public class FreightOpenCVRedFreight extends LinearOpMode {
                 //
         }
         webCam.stopStreaming();
+
+        h.turnIMU(-90,.5,.3);
+        h.drive(true,50,.7);
+
         /*h.motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             h.motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             h.motorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
