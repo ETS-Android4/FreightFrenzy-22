@@ -22,7 +22,7 @@ public class TeleOp2022 extends LinearOpMode
             telemetry.addData("Init Error:", "Something failed to initialize");
             e.printStackTrace();
         }
-        h.servoIntake.setPosition(1);
+
         telemetry.addData("Main Initialization ", "complete");
         telemetry.update();
 
@@ -78,28 +78,23 @@ public class TeleOp2022 extends LinearOpMode
 
             if(pressedIntake & !pressedLastIterationIntake)
             {
-                if(h.servoIntake.getPosition() == 1)
+                if(h.servoIntake.getPosition() >= .3)
                 {
-                    h.servoIntake.setPosition(0);
+                    h.servoIntake.setPosition(.1); //0 .1
                 }
                 else
                 {
-                    h.servoIntake.setPosition(1);
+                    h.servoIntake.setPosition(.4); //1 .3
                 }
 
             }
 
             if (gamepad1.y)
             {
-                h.servoIntake.setPosition(.2);
-            }
-            if(gamepad1.b)
-            {
-                h.motorArm.setTargetPosition(0);
-                h.motorArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                h.motorArm.setPower(.7);
+                h.servoIntake.setPosition(0);
             }
 
+            //.1 is open
 
             if(pressedCarousel & !pressedLastIterationCarousel)
             {
@@ -131,7 +126,7 @@ public class TeleOp2022 extends LinearOpMode
             }*/
             if(gamepad1.right_trigger > .01 /*&& h.motorArm.getPosition() < high limit*/)
             {
-                h.motorArm.setPower(.3);
+                h.motorArm.setPower(.8);
             }
             if (gamepad1.right_bumper /*&& h.motorArm.getPosition() > low limit*/)
             {
@@ -141,6 +136,19 @@ public class TeleOp2022 extends LinearOpMode
             {
                 h.motorArm.setPower(0);
             }
+            if(gamepad1.b)
+            {
+                h.motorArm.setTargetPosition(500);
+                h.motorArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                h.motorArm.setPower(.3);
+            }
+            if(gamepad1.a)
+            {
+                h.motorArm.setTargetPosition(0);
+                h.motorArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                h.motorArm.setPower(.3);
+            }
+
 
             if(gamepad1.left_trigger > .01 && h.motorWinch.getCurrentPosition() < 450)
             {
