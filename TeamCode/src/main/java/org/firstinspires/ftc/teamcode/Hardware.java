@@ -769,11 +769,11 @@ public class Hardware extends LinearOpMode
         //Right is all positive
         //Left is all negative
         //Straight is left positive. Right negative.
-        if(targetDegrees == 0)
+        if(targetDegrees == 0 && !isStopRequested())
         {
             //Tell robot to correct to straight forward
 
-            if(getIntegratedHeading() > 0)
+            if(getIntegratedHeading() > 0 && !isStopRequested())
             {
                 //If the MRgyro reads back left from zero
 
@@ -811,7 +811,7 @@ public class Hardware extends LinearOpMode
                     idle();
                 }
             }
-            if(getIntegratedHeading() < 0)
+            if(getIntegratedHeading() < 0 && !isStopRequested())
             {
                 //If the MRgyro reads back right from zero
 
@@ -853,7 +853,7 @@ public class Hardware extends LinearOpMode
             motorBackRight.setPower(0);
         }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-        if(targetDegrees > 0)
+        if(targetDegrees > 0 && !isStopRequested())
         {
             //TURNING LEFT
             motorFrontLeft.setPower(-power);

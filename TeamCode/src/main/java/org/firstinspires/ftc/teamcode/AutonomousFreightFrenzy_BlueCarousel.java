@@ -83,7 +83,8 @@ public class AutonomousFreightFrenzy_BlueCarousel extends LinearOpMode {
             //h.turnIMU(90,.5,.3)
 
             //Forward
-            h.motorFrontRight.setPower(-.5);
+            h.motorCarousel.setPower(-.3);
+            /*h.motorFrontRight.setPower(-.5);
             h.motorBackRight.setPower(-.5);
             h.motorFrontLeft.setPower(.5);
             h.motorBackLeft.setPower(.5);

@@ -84,7 +84,7 @@ public class TeleOp2022 extends LinearOpMode
                 }
                 else
                 {
-                    h.servoIntake.setPosition(.4); //1 .3
+                    h.servoIntake.setPosition(.45); //1 .3
                 }
 
             }
@@ -100,11 +100,11 @@ public class TeleOp2022 extends LinearOpMode
             {
                 if(h.motorCarousel.getPower() == 0 && gamepad2.b)
                 {
-                    h.motorCarousel.setPower(.3);
+                    h.motorCarousel.setPower(.3); //.3
                 }
                 else if(h.motorCarousel.getPower() == 0)
                 {
-                    h.motorCarousel.setPower(-.3);
+                    h.motorCarousel.setPower(-.3); //-.3
                 }
                 else
                 {
@@ -136,7 +136,7 @@ public class TeleOp2022 extends LinearOpMode
             {
                 h.motorArm.setPower(0);
             }
-            if(gamepad1.b)
+            /*if(gamepad1.b)
             {
                 h.motorArm.setTargetPosition(500);
                 h.motorArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -147,7 +147,7 @@ public class TeleOp2022 extends LinearOpMode
                 h.motorArm.setTargetPosition(0);
                 h.motorArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 h.motorArm.setPower(.3);
-            }
+            }*/
 
 
             if(gamepad1.left_trigger > .01 && h.motorWinch.getCurrentPosition() < 450)
