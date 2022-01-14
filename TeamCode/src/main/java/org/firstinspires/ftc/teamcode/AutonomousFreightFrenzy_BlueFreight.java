@@ -4,11 +4,10 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name = "Blue Carousel Autonomous---------this one if by blue carousel-------", group = "Linear OpMode")
-public class AutonomousFreightFrenzy_BlueCarousel extends LinearOpMode {
+@Autonomous(name = "Blue Freight Autonomous---------this one if by blue freight-------", group = "Linear OpMode")
+public class AutonomousFreightFrenzy_BlueFreight extends LinearOpMode {
 
     OpMode opmode;
 
@@ -98,12 +97,9 @@ public class AutonomousFreightFrenzy_BlueCarousel extends LinearOpMode {
             //h.turnIMU(90,.5,.3)
 
             //Forward
-            h.motorCarousel.setPower(-.3);
-            h.sleep(7000);
-            h.motorCarousel.setPower(0);
-            h.turnIMU(-35,.5,.3);
-            h.strafe(true,25,.5);
-            h.drive(false,5,.3);
+            h.drivePureEncoder(true,1000,.3);
+            h.turnIMU(90,.5,.3);
+            h.drive(true,33,.7);
 
             /*h.motorFrontRight.setPower(-.5);
             h.motorBackRight.setPower(-.5);
