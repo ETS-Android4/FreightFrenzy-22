@@ -96,7 +96,7 @@ public class TeleOp2022 extends LinearOpMode
 
             //.1 is open
 
-            if(pressedCarousel & !pressedLastIterationCarousel)
+            /*if(pressedCarousel & !pressedLastIterationCarousel)
             {
                 if(h.motorCarousel.getPower() == 0 && gamepad2.b)
                 {
@@ -111,7 +111,20 @@ public class TeleOp2022 extends LinearOpMode
                     h.motorCarousel.setPower(0);
                 }
 
+            }*/
+            if (gamepad2.b)
+            {
+                h.motorCarousel.setPower(.4);
             }
+            if (gamepad2.x)
+            {
+                h.motorCarousel.setPower(-.4);
+            }
+            if (!gamepad2.x && !gamepad2.b)
+            {
+                h.motorCarousel.setPower(0);
+            }
+
             /*if(pressedCarouselReverse & !pressedLastIterationCarouselReverse)
             {
                 if(h.motorCarousel.getPower() == 0)

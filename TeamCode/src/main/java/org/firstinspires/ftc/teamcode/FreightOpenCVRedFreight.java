@@ -187,7 +187,7 @@ public class FreightOpenCVRedFreight extends LinearOpMode {
 
                 h.drivePureEncoder(true,800,.3);
                 /** DROPPING BLOCK **/
-                h.motorArm.setTargetPosition(500);
+                h.motorArm.setTargetPosition(968);
                 h.motorArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 h.motorArm.setPower(.5);
 
@@ -197,7 +197,7 @@ public class FreightOpenCVRedFreight extends LinearOpMode {
                     telemetry.update();
                 }
 
-                h.motorWinch.setTargetPosition(250);
+                h.motorWinch.setTargetPosition(140);
                 h.motorWinch.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 h.motorWinch.setPower(.5);
 
