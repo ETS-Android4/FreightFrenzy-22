@@ -10,7 +10,7 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-@Autonomous(name="Blue Carousel Detector", group="Auto")
+@Autonomous(name="Blue Carousel Detector-----DON't RUN", group="Auto")
 public class FreightOpenCVBlueCarousel extends LinearOpMode {
     Hardware h = new Hardware();
     OpenCvCamera webCam;
@@ -79,10 +79,10 @@ public class FreightOpenCVBlueCarousel extends LinearOpMode {
         waitForStart();
         switch (detector.getLocation()) {
             case LEFT: //middle
-                position = Position.BOTTOM;
+                position = Position.MIDDLE;
                 break;
             case MIDDLE://bottom
-                position = Position.MIDDLE;
+                position = Position.BOTTOM;
                 break;
             case RIGHT://top
                 position = Position.TOP;
@@ -145,10 +145,10 @@ public class FreightOpenCVBlueCarousel extends LinearOpMode {
         h.motorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         h.motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        h.motorFrontLeft.setTargetPosition(-2100);
-        h.motorFrontRight.setTargetPosition(-2100);
-        h.motorBackLeft.setTargetPosition(-2100);
-        h.motorBackRight.setTargetPosition(-2100);
+        h.motorFrontLeft.setTargetPosition(-1600);
+        h.motorFrontRight.setTargetPosition(-1600);
+        h.motorBackLeft.setTargetPosition(-1600);
+        h.motorBackRight.setTargetPosition(-1600);
 
         h.motorFrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         h.motorFrontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -160,20 +160,17 @@ public class FreightOpenCVBlueCarousel extends LinearOpMode {
 
         h.motorCarousel.setPower(-.3);
         h.sleep(5000);
+        h.motorCarousel.setPower(0);
 
         h.motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         h.motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         h.motorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         h.motorBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        h.motorCarousel.setPower(0);
-
-        h.turnIMU(-90,.5,.3);
-
-        h.motorFrontLeft.setTargetPosition(1270);
-        h.motorFrontRight.setTargetPosition(1270);
-        h.motorBackLeft.setTargetPosition(1270);
-        h.motorBackRight.setTargetPosition(1270);
+        h.motorFrontLeft.setTargetPosition(1750);
+        h.motorFrontRight.setTargetPosition(-1750);
+        h.motorBackLeft.setTargetPosition(-1750);
+        h.motorBackRight.setTargetPosition(1750);
 
         h.motorFrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         h.motorFrontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
