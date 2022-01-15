@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name = "Blue Freight Autonomous---------this one if by blue freight-------", group = "Linear OpMode")
+@Autonomous(name = "Blue Freight Autonomous", group = "Linear OpMode")
 public class AutonomousFreightFrenzy_BlueFreight extends LinearOpMode {
 
     OpMode opmode;

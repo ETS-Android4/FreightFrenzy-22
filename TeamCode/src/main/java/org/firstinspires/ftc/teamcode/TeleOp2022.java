@@ -27,13 +27,12 @@ public class TeleOp2022 extends LinearOpMode
         telemetry.update();
 
         boolean pressedLastIterationIntake = false;
-        boolean pressedLastIterationCarousel = false;
+        boolean pressedLastIterationSlowdown = false;
         boolean pressedLastIterationCarouselReverse = false;
 
         waitForStart();
         while (opModeIsActive())
         {
-            boolean pressedCarousel = gamepad2.a;
             boolean pressedIntake = gamepad1.x;
             //telemetry.addData("range", String.format("%.01f in", h.distanceSensor.getDistance(DistanceUnit.INCH)));
             //telemetry.addData("Distance: ",h.distanceSensor.getDistance(DistanceUnit.INCH));
@@ -96,7 +95,7 @@ public class TeleOp2022 extends LinearOpMode
 
             //.1 is open
 
-            /*if(pressedCarousel & !pressedLastIterationCarousel)
+            /*if(pressedSl & !pressedLastIterationCarousel)
             {
                 if(h.motorCarousel.getPower() == 0 && gamepad2.b)
                 {
@@ -149,6 +148,7 @@ public class TeleOp2022 extends LinearOpMode
             {
                 h.motorArm.setPower(0);
             }
+            
             /*if(gamepad1.b)
             {
                 h.motorArm.setTargetPosition(500);
@@ -274,7 +274,6 @@ public class TeleOp2022 extends LinearOpMode
 
 
             pressedLastIterationIntake = pressedIntake;
-            pressedLastIterationCarousel = pressedCarousel;
         }
     }
 }

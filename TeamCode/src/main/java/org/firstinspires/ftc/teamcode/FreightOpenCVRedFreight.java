@@ -10,7 +10,7 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-@Autonomous(name="Freight Detector", group="Auto")
+@Autonomous(name="Red Freight Detector", group="Auto")
 public class FreightOpenCVRedFreight extends LinearOpMode {
     Hardware h = new Hardware();
     OpenCvCamera webCam;

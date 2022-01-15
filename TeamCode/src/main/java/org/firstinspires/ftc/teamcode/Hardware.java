@@ -390,8 +390,7 @@ public class Hardware extends LinearOpMode
 
         distanceEncodeVal = -(int) Math.round((distanceInches/(4* Math.PI))*1120);
         driveTime = (distanceInches/10)*1000;
-        long beginning = System.currentTimeMillis();
-        long end =beginning + driveTime;
+
 
 
 
@@ -431,7 +430,7 @@ public class Hardware extends LinearOpMode
         if(left)
         {
 
-            while (motorFrontRight.getCurrentPosition() < -distanceEncodeVal + 20 && !isStopRequested() && end > System.currentTimeMillis())
+            while (motorFrontRight.getCurrentPosition() < -distanceEncodeVal + 20 && !isStopRequested()/* && end > System.currentTimeMillis()*/)
             {
 
             }
@@ -439,7 +438,7 @@ public class Hardware extends LinearOpMode
         else
         {
 
-            while (motorFrontRight.getCurrentPosition() > distanceEncodeVal - 20 && !isStopRequested() && end > System.currentTimeMillis())
+            while (motorFrontRight.getCurrentPosition() > distanceEncodeVal - 20 && !isStopRequested()/* && end > System.currentTimeMillis()*/)
             {
 
             }
