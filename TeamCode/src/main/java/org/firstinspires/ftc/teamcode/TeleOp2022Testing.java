@@ -3,9 +3,10 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-@TeleOp(name = "Testing2022Teleop", group = "TeleOp")
+@TeleOp(name = "Testing", group = "TeleOp")
 public class TeleOp2022Testing extends LinearOpMode
 {
     OpMode opmode;
@@ -21,99 +22,108 @@ public class TeleOp2022Testing extends LinearOpMode
             telemetry.addData("Init Error:", "Something failed to initialize");
             e.printStackTrace();
         }
-        h.servoIntake.setPosition(1);
+
         telemetry.addData("Main Initialization ", "complete");
         telemetry.update();
 
         boolean pressedLastIterationIntake = false;
-        boolean pressedLastIterationCarousel = false;
+        boolean pressedLastIterationSlowdown = false;
         boolean pressedLastIterationCarouselReverse = false;
 
         waitForStart();
         while (opModeIsActive())
         {
-            boolean pressedCarousel = gamepad2.a;
             boolean pressedIntake = gamepad1.x;
-            boolean pressedCarouselReverse = gamepad1.b;
             //telemetry.addData("range", String.format("%.01f in", h.distanceSensor.getDistance(DistanceUnit.INCH)));
             //telemetry.addData("Distance: ",h.distanceSensor.getDistance(DistanceUnit.INCH));
-            telemetry.addData("motorArm Position: ", h.motorArm.getCurrentPosition());
-            telemetry.addData("motorWinch Position: ", h.motorWinch.getCurrentPosition());
+            telemetry.addData("motorWinch Position: ", h.motorWinch.getCurrentPosition() + " busy =" + h.motorWinch.isBusy());
+            telemetry.addData("motorArm Position: ", h.motorArm.getCurrentPosition() + " busy =" + h.motorArm.isBusy());
             telemetry.addData("servoIntake: ", h.servoIntake.getPosition());
-            telemetry.addData("dpad_left: ", gamepad1.dpad_left);
-            telemetry.addData("dpad_right: ", gamepad1.dpad_right);
-            telemetry.addData("dpad_down: ", gamepad1.dpad_down);
-            telemetry.addData("dpad_up: ", gamepad1.dpad_up);
             telemetry.addData("motorFrontLeft encoder value: ",h.motorFrontLeft.getCurrentPosition());
             telemetry.addData("motorFrontRight encoder value: ",h.motorFrontRight.getCurrentPosition());
             telemetry.addData("motorBackLeft encoder value: ",h.motorBackLeft.getCurrentPosition());
             telemetry.addData("motorBackRight encoder value: ",h.motorBackRight.getCurrentPosition());
             telemetry.update();
             h.driveOmniDir(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
-            if(gamepad1.dpad_left)
+            if(gamepad1.dpad_left || gamepad2.dpad_left)
             {
                 h.motorFrontLeft.setPower(-.2);
-                h.motorFrontRight.setPower(-.2);
-                h.motorBackLeft.setPower(-.2);
-                h.motorBackRight.setPower(-.2);
-            }
-            else if (gamepad1.dpad_right)
-            {
-                h.motorFrontLeft.setPower(.2);
                 h.motorFrontRight.setPower(.2);
-                h.motorBackLeft.setPower(.2);
+                h.motorBackLeft.setPower(-.2);
                 h.motorBackRight.setPower(.2);
             }
-            if(gamepad1.dpad_up)
+            else if (gamepad1.dpad_right || gamepad2.dpad_right)
             {
                 h.motorFrontLeft.setPower(.2);
                 h.motorFrontRight.setPower(-.2);
                 h.motorBackLeft.setPower(.2);
                 h.motorBackRight.setPower(-.2);
             }
-            else if(gamepad1.dpad_down)
+            if(gamepad1.dpad_up || gamepad2.dpad_up)
+            {
+                h.motorFrontLeft.setPower(.2);
+                h.motorFrontRight.setPower(.2);
+                h.motorBackLeft.setPower(.2);
+                h.motorBackRight.setPower(.2);
+            }
+            else if(gamepad1.dpad_down || gamepad2.dpad_down)
             {
                 h.motorFrontLeft.setPower(-.2);
-                h.motorFrontRight.setPower(.2);
+                h.motorFrontRight.setPower(-.2);
                 h.motorBackLeft.setPower(-.2);
-                h.motorBackRight.setPower(.2);
+                h.motorBackRight.setPower(-.2);
             }
 
 
             if(pressedIntake & !pressedLastIterationIntake)
             {
-                if(h.servoIntake.getPosition() == 1)
+                if(h.servoIntake.getPosition() >= .3)
                 {
-                    h.servoIntake.setPosition(0);
+                    h.servoIntake.setPosition(.1); //0 .1
                 }
                 else
                 {
-                    h.servoIntake.setPosition(1);
+                    h.servoIntake.setPosition(.45); //1 .3
                 }
 
             }
 
             if (gamepad1.y)
             {
-                h.servoIntake.setPosition(.2);
+                h.servoIntake.setPosition(0);
             }
 
-            if(pressedCarousel & !pressedLastIterationCarousel)
+            //.1 is open
+
+            /*if(pressedSl & !pressedLastIterationCarousel)
             {
                 if(h.motorCarousel.getPower() == 0 && gamepad2.b)
                 {
-                    h.motorCarousel.setPower(.3);
+                    h.motorCarousel.setPower(.3); //.3
                 }
                 else if(h.motorCarousel.getPower() == 0)
                 {
-                    h.motorCarousel.setPower(-.3);
+                    h.motorCarousel.setPower(-.3); //-.3
                 }
                 else
                 {
                     h.motorCarousel.setPower(0);
                 }
 
+            }*/
+            if (gamepad2.b)
+            {
+                h.motorCarousel.setPower(.4);
             }
+            if (gamepad2.x)
+            {
+                h.motorCarousel.setPower(-.4);
+            }
+            if (!gamepad2.x && !gamepad2.b)
+            {
+                h.motorCarousel.setPower(0);
+            }
+
             /*if(pressedCarouselReverse & !pressedLastIterationCarouselReverse)
             {
                 if(h.motorCarousel.getPower() == 0)
@@ -126,28 +136,46 @@ public class TeleOp2022Testing extends LinearOpMode
                 }
 
             }*/
-            if(gamepad1.right_trigger > 0 /*&& h.motorArm.getPosition() < high limit*/)
+            if(gamepad1.right_trigger > .01 /*&& h.motorArm.getPosition() < high limit*/)
             {
-                h.motorArm.setPower(gamepad1.right_trigger);
+                h.motorArm.setTargetPosition(0);
+                h.motorArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                h.motorArm.setPower(.8);
             }
-            if (gamepad1.left_trigger > 0 /*&& h.motorArm.getPosition() > low limit*/)
+            if (gamepad1.right_bumper /*&& h.motorArm.getPosition() > low limit*/)
             {
-                h.motorArm.setPower(-gamepad1.left_trigger);
+                h.motorArm.setTargetPosition(500);
+                h.motorArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                h.motorArm.setPower(1);
             }
-            if(gamepad1.left_trigger == 0 && gamepad1.right_trigger == 0)
+            if(!gamepad1.right_bumper && gamepad1.right_trigger == 0)
             {
-                h.motorArm.setPower(0);
+
             }
 
-            if(gamepad1.right_bumper)
+            /*if(gamepad1.b)
+            {
+                h.motorArm.setTargetPosition(500);
+                h.motorArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                h.motorArm.setPower(.3);
+            }
+            if(gamepad1.a)
+            {
+                h.motorArm.setTargetPosition(0);
+                h.motorArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                h.motorArm.setPower(.3);
+            }*/
+
+
+            if(gamepad1.left_trigger > .01 && h.motorWinch.getCurrentPosition() < 450)
             {
                 h.motorWinch.setPower(.5);
             }
-            if (gamepad1.left_bumper)
+            if (gamepad1.left_bumper && h.motorWinch.getCurrentPosition() >= -10)
             {
                 h.motorWinch.setPower(-.5);
             }
-            if(!gamepad1.left_bumper && !gamepad1.right_bumper)
+            if(!gamepad1.left_bumper && gamepad1.left_trigger == 0)
             {
                 h.motorWinch.setPower(0);
             }
@@ -250,7 +278,6 @@ public class TeleOp2022Testing extends LinearOpMode
 
 
             pressedLastIterationIntake = pressedIntake;
-            pressedLastIterationCarousel = pressedCarousel;
         }
     }
 }
