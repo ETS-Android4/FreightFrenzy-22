@@ -27,8 +27,10 @@ public class TeleOp2022 extends LinearOpMode
         telemetry.update();
 
         boolean pressedLastIterationIntake = false;
-        boolean pressedLastIterationSlowdown = false;
         boolean pressedLastIterationCarouselReverse = false;
+        boolean slow = false;
+        double armSpeedUp = -1;
+        double armSpeedDown = .8;
 
         waitForStart();
         while (opModeIsActive())
@@ -39,11 +41,15 @@ public class TeleOp2022 extends LinearOpMode
             telemetry.addData("motorWinch Position: ", h.motorWinch.getCurrentPosition() + " busy =" + h.motorWinch.isBusy());
             telemetry.addData("motorArm Position: ", h.motorArm.getCurrentPosition() + " busy =" + h.motorArm.isBusy());
             telemetry.addData("servoIntake: ", h.servoIntake.getPosition());
+            telemetry.addData("slowdown bool: ", slow);
+            telemetry.addData("armSpeedUp: ", armSpeedUp);
+            telemetry.addData("armSpeedDown: ", armSpeedDown);
             telemetry.addData("motorFrontLeft encoder value: ",h.motorFrontLeft.getCurrentPosition());
             telemetry.addData("motorFrontRight encoder value: ",h.motorFrontRight.getCurrentPosition());
             telemetry.addData("motorBackLeft encoder value: ",h.motorBackLeft.getCurrentPosition());
             telemetry.addData("motorBackRight encoder value: ",h.motorBackRight.getCurrentPosition());
             telemetry.update();
+            slow = gamepad1.a;
             h.driveOmniDir(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
             if(gamepad1.dpad_left || gamepad2.dpad_left)
             {
@@ -83,7 +89,7 @@ public class TeleOp2022 extends LinearOpMode
                 }
                 else
                 {
-                    h.servoIntake.setPosition(.45); //1 .3
+                    h.servoIntake.setPosition(1); //1 .3
                 }
 
             }
@@ -138,15 +144,26 @@ public class TeleOp2022 extends LinearOpMode
             }*/
             if(gamepad1.right_trigger > .01 /*&& h.motorArm.getPosition() < high limit*/)
             {
-                h.motorArm.setPower(.8);
+                h.motorArm.setPower(armSpeedDown);
             }
             if (gamepad1.right_bumper /*&& h.motorArm.getPosition() > low limit*/)
             {
-                h.motorArm.setPower(-1);
+                h.motorArm.setPower(armSpeedUp);
             }
             if(!gamepad1.right_bumper && gamepad1.right_trigger == 0)
             {
                 h.motorArm.setPower(0);
+            }
+
+            if(slow)
+            {
+                armSpeedDown = .4;
+                armSpeedUp = -.5;
+            }
+            else
+            {
+                armSpeedDown = .8;
+                armSpeedUp = -1;
             }
             
             /*if(gamepad1.b)

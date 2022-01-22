@@ -560,6 +560,22 @@ public class Hardware extends LinearOpMode
          motorFrontLeft.setPower(-joystickY + joystickX - rotation);
          motorBackLeft.setPower(-joystickY - joystickX - rotation);*/
     }
+    public void driveTank(double joystickL, double joystickR, double joystickX)
+    {
+        /**                   | Forward,    |           |
+         *                    | Backwards,  |  Strafing |
+                              | and Turning |           | */
+        motorFrontRight.setPower(-joystickR - joystickX);
+        motorBackRight.setPower(-joystickR + joystickX);
+        motorFrontLeft.setPower(-joystickL + joystickX);
+        motorBackLeft.setPower(-joystickL - joystickX);
+
+         /*motorFrontRight.setPower(joystickY + joystickX - rotation);
+         motorBackRight.setPower(joystickY - joystickX - rotation);
+         motorFrontLeft.setPower(-joystickY + joystickX - rotation);
+         motorBackLeft.setPower(-joystickY - joystickX - rotation);*/
+    }
+    /*driveTank(gamepad1.left_stick_Y, gamepad1.right_stick_Y, gamepad1.left_stick_X);*/
 
     public double getIntegratedHeading() {
         double currentHeading = imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).thirdAngle;

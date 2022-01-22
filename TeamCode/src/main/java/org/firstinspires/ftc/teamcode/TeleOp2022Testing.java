@@ -27,8 +27,8 @@ public class TeleOp2022Testing extends LinearOpMode
         telemetry.update();
 
         boolean pressedLastIterationIntake = false;
-        boolean pressedLastIterationSlowdown = false;
-        boolean pressedLastIterationCarouselReverse = false;
+        int      armLevel = 3;
+        boolean bButton = false, aButtonPressed = false, bButtonPressed = false;
 
         waitForStart();
         while (opModeIsActive())
@@ -44,7 +44,7 @@ public class TeleOp2022Testing extends LinearOpMode
             telemetry.addData("motorBackLeft encoder value: ",h.motorBackLeft.getCurrentPosition());
             telemetry.addData("motorBackRight encoder value: ",h.motorBackRight.getCurrentPosition());
             telemetry.update();
-            h.driveOmniDir(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
+            h.driveTank(gamepad1.left_stick_y, gamepad1.right_stick_y, gamepad1.left_stick_x);
             if(gamepad1.dpad_left || gamepad2.dpad_left)
             {
                 h.motorFrontLeft.setPower(-.2);
@@ -148,10 +148,52 @@ public class TeleOp2022Testing extends LinearOpMode
                 h.motorArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 h.motorArm.setPower(1);
             }
-            if(!gamepad1.right_bumper && gamepad1.right_trigger == 0)
+            switch (armLevel)
             {
+                case 0:
 
+                break;
+
+                case 1:
+                    h.motorArm.setTargetPosition(1148);
+                    h.motorArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    h.motorArm.setPower(1);
+                break;
+
+                case 2:
+                    h.motorArm.setTargetPosition(500);
+                    h.motorArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    h.motorArm.setPower(1);
+                break;
+
+                case 3:
+                    h.motorArm.setTargetPosition(0);
+                    h.motorArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    h.motorArm.setPower(.8);
+                break;
             }
+            if (gamepad1.a)
+                if(!aButtonPressed)
+                {
+                    if (armLevel <= 3) {
+                        armLevel += 1;
+                    }
+                    aButtonPressed = true;
+                }
+                else {}
+            else
+                aButtonPressed = false;
+            if (gamepad1.b)
+                if(!bButtonPressed)
+                {
+                    if(armLevel >= 0) {
+                        armLevel -= 1;
+                    }
+                    bButtonPressed = true;
+                }
+                else {}
+            else
+                bButtonPressed = false;
 
             /*if(gamepad1.b)
             {
